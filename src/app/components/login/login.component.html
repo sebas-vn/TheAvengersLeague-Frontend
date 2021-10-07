@@ -1,0 +1,31 @@
+<h1>Welcome to Avengers League</h1>
+<div>
+    <form>
+        <div class = "form-row">
+            <div class="form-group col-md-3">
+                <label for="inputFirstName">First Name</label>
+                <input [(ngModel)]="user.firstName" type="text" name="fname" class="form-control" id="inputFirstName">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputLastName">Last Name</label>
+                <input [(ngModel)]="user.lastName" type="text" name="lname" class="form-control" id="inputLastName">
+            </div>
+        </div>
+        <div class = "form-row">
+            <div class = "form-group col-md-3">
+                <label for = "inputUsername">Username</label>
+                <input [(ngModel)] = "user.username" type = "text" name = "lname" class = "form-control">
+            </div>
+            <div class = "form-group col-md-3">
+                <label for = "inputEmail">Email</label>
+                <input [(ngModel)] = "user.email" type = "text" name = "email" class = "form-control">
+            </div>
+            <div class = "form-group col-md-3">
+                <label for = "inputPassword">Password</label>
+                <input [(ngModel)] = "user.password" type = "text" name = "password" class = "form-control">
+            </div>
+        </div>
+        <br>
+        <button type = "submit" class = "btn" (click) = "registerUser()">Register</button>
+    </form>
+</div>
