@@ -4,8 +4,9 @@ import { User } from '../models/user';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
-  public user = new User('', '', '', '', '')
-
-  constructor() { }
+export class LoginService {
+  public user = new User('','','','','');
+  constructor(user: User) {
+    this.user = user;
+  }
 }
