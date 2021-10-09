@@ -1,0 +1,14 @@
+<ng-container *ngIf="heroes.length > 0">
+    <mat-card *ngFor="let hero of heroes" class="hero-card">
+        <mat-card-header>
+          <mat-card-title> {{ hero.name }} </mat-card-title>
+          <mat-card-subtitle> {{ hero.work.occupation }} </mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image class="hero-image" [src]="hero.image.url" alt="Hero Image">
+        <!-- Maybe add a mat-card-content -->
+        <mat-card-actions>
+          <button mat-button>TRADE</button>
+          <button mat-button>BUY</button>
+        </mat-card-actions>
+    </mat-card>
+</ng-container>
