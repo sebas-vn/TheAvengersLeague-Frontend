@@ -5,6 +5,7 @@
 export const environment = {
   production: false
 };
+export const sendUrl =  'http://talbackend-env.eba-ejssdhpt.us-east-2.elasticbeanstalk.com/';
 
 /*
  * For easier debugging in development mode, you can import the following file

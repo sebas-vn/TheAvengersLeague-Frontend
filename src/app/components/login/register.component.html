@@ -1,31 +1,33 @@
-<h1>Welcome to Avengers League</h1>
-<div>
+<h1 class = "center">Welcome to Avengers League</h1>
+<div class = "center">
     <form>
         <div class = "form-row">
-            <div class="form-group col-md-3">
-                <label for="inputFirstName">First Name</label>
-                <input [(ngModel)]="user.firstName" type="text" name="fname" class="form-control" id="inputFirstName">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputLastName">Last Name</label>
-                <input [(ngModel)]="user.lastName" type="text" name="lname" class="form-control" id="inputLastName">
-            </div>
+            <mat-form-field class = "form-group center">
+                <mat-label>First Name</mat-label>
+                <input matInput [(ngModel)]="user.firstName" name="fname" class="form-control" id="inputFirstName">
+            </mat-form-field>
+            <mat-form-field class = "form-group center">
+                <mat-label>Last Name</mat-label>
+                <input matInput [(ngModel)]="user.lastName" name="lname" class="form-control" id="inputLastName">
+            </mat-form-field>
         </div>
         <div class = "form-row">
-            <div class = "form-group col-md-3">
-                <label for = "inputUsername">Username</label>
-                <input [(ngModel)] = "user.username" type = "text" name = "username" class = "form-control">
-            </div>
-            <div class = "form-group col-md-3">
-                <label for = "inputEmail">Email</label>
-                <input [(ngModel)] = "user.email" type = "text" name = "email" class = "form-control">
-            </div>
-            <div class = "form-group col-md-3">
-                <label for = "inputPassword">Password</label>
-                <input [(ngModel)] = "user.password" type = "text" name = "password" class = "form-control">
-            </div>
+            <mat-form-field class = "form-group center">
+                <mat-label>Username</mat-label>
+                <input matInput [(ngModel)] = "user.username" type = "text" name = "username" class = "form-control">
+            </mat-form-field>
+            <br>
+            <mat-form-field class = "form-group center">
+                <mat-label>Email</mat-label>
+                <input matInput [(ngModel)] = "user.email" type = "text" name = "email" class = "form-control">
+            </mat-form-field>
+            <br>
+            <mat-form-field class = "form-group center">
+                <mat-label>Password</mat-label>
+                <input matInput [(ngModel)] = "user.password" type = "text" name = "password" class = "form-control">
+            </mat-form-field>
         </div>
         <br>
-        <button type = "submit" class = "btn" (click) = "registerUser()">Register</button>
+        <button type = "submit" class = "btn center" (click) = "registerUser()">Register</button>
     </form>
 </div>

@@ -5,3 +5,9 @@
 .alert {
     margin-top: 3%;
 }
+.center{
+    width: auto;
+    margin: auto;
+    padding: 10px;
+    text-align: center
+}
