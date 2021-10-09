@@ -1,0 +1,41 @@
+<div class="container">
+
+    <div class="title-page">
+        <span>Welcome back ...User...</span>
+    </div>
+
+    <mat-grid-list cols="12" rowHeight="700px" gutterSize="2rem">
+        <mat-grid-tile [colspan]="9">
+
+            <div class="tile-container">
+                <mat-tab-group animationDuration="0ms" dynamicHeight>
+                    <mat-tab label="Available Cards"> 
+                    
+                        <button mat-stroked-button color="accent" (click)="getHero()">Get IronMan</button>
+
+                        <app-hero-card [heroes]="heroes"></app-hero-card>
+                    
+                    </mat-tab>
+
+                    <mat-tab label="Decks"> 
+
+                        content1
+                        
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="3">
+
+            <div class="tile-container-friends">
+                <span class="tile-container-title"> Friends </span>
+                <div class="tile-container-body">
+                    
+                </div>
+            </div>
+
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
