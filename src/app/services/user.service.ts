@@ -4,7 +4,8 @@ import { User } from '../models/user';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-const url = `/users`;
+import { sendUrl } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +18,14 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   }
   public registerUser(user: User): Observable<User> {
-    return this.http.post<User>(`${url}/add`, user, this.httpOptions) // url, user, this.httpOptions
+    return this.http.post<User>(`${sendUrl}api/user/add`, user, this.httpOptions) // url, user, this.httpOptions
     .pipe( // we are calling a method on the data returned in the observable
       catchError(this.handleError) // passing a callback
     )
   }
   public findByUsername(username: string): Observable<User> {
 
-    return this.http.get<User>(`${url}/find/${username}`)
+    return this.http.get<User>(`${sendUrl}/find/${username}`)
       .pipe(
         catchError(this.handleError)
       )
