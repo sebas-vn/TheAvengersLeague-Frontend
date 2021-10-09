@@ -1,0 +1,33 @@
+<h1 class = "center">Welcome to Avengers League</h1>
+<div class = "center">
+    <form>
+        <div class = "form-row">
+            <mat-form-field class = "form-group center">
+                <mat-label>First Name</mat-label>
+                <input matInput [(ngModel)]="user.firstName" name="fname" class="form-control" id="inputFirstName">
+            </mat-form-field>
+            <mat-form-field class = "form-group center">
+                <mat-label>Last Name</mat-label>
+                <input matInput [(ngModel)]="user.lastName" name="lname" class="form-control" id="inputLastName">
+            </mat-form-field>
+        </div>
+        <div class = "form-row">
+            <mat-form-field class = "form-group center">
+                <mat-label>Username</mat-label>
+                <input matInput [(ngModel)] = "user.username" type = "text" name = "username" class = "form-control">
+            </mat-form-field>
+            <br>
+            <mat-form-field class = "form-group center">
+                <mat-label>Email</mat-label>
+                <input matInput [(ngModel)] = "user.email" type = "text" name = "email" class = "form-control">
+            </mat-form-field>
+            <br>
+            <mat-form-field class = "form-group center">
+                <mat-label>Password</mat-label>
+                <input matInput [(ngModel)] = "user.password" type = "text" name = "password" class = "form-control">
+            </mat-form-field>
+        </div>
+        <br>
+        <button type = "submit" class = "btn center" (click) = "registerUser()">Register</button>
+    </form>
+</div>
