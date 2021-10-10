@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   constructor(private userService: UserService, private http: HttpClient) { }
 
   ngOnInit(): void {
- 
+    
 
   }
   public registerUser(): void
