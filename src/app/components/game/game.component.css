@@ -1,0 +1,31 @@
+.game {
+    display: grid;
+    grid-template-columns: 120px 120px 120px 120px 120px 120px 120px;
+    grid-template-rows: 120px 120px 120px 120px 120px 120px 120px;
+    justify-content: center;
+}
+
+.space {
+    background-color: #d9d9d9;
+    border: 2px solid black;
+}
+
+.wall {
+    background-color:black;
+}
+
+.hand {
+    display: grid;
+    grid-template-columns: 120px 120px 120px;
+    grid-template-rows: 120px;
+    justify-content: right;
+    padding: 1.5%;
+}
+
+.enemyhand {
+    display: grid;
+    grid-template-columns: 120px 120px 120px;
+    grid-template-rows: 120px;
+    justify-content: left;
+    padding: 1.5%;
+}
