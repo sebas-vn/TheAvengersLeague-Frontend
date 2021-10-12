@@ -22,6 +22,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatInputModule} from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { UpdateComponent } from './components/update/update.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     NavbarComponent,
     HeroCardComponent,
-    RegisterComponent
+    RegisterComponent,
+    UpdateComponent
   ],
   imports: [
     BrowserModule,
