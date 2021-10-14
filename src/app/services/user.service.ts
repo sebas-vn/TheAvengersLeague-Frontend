@@ -1,3 +1,4 @@
+import { AppComponent } from './../app.component';
 
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
@@ -18,6 +19,7 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   }
   public registerUser(user: User): Observable<User> {
+    AppComponent.logIn();
     return this.http.post<User>(`${sendUrl}api/user/add`, user, this.httpOptions) // url, user, this.httpOptions
     .pipe( // we are calling a method on the data returned in the observable
       catchError(this.handleError) // passing a callback

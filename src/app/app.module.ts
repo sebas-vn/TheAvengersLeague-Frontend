@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { RegisterComponent } from './components/login/register.component';
+import { RegisterComponent } from './components/register/register.component';
 
 
 // Angular Material Components
@@ -23,6 +23,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import {MatInputModule} from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { UpdateComponent } from './components/update/update.component';
+import { LoginComponent } from './components/login/login.component';
+import { FrontDoorComponent } from './components/front-door/front-door.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { UpdateComponent } from './components/update/update.component';
     NavbarComponent,
     HeroCardComponent,
     RegisterComponent,
-    UpdateComponent
+    UpdateComponent,
+    LoginComponent,
+    FrontDoorComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,7 @@ import { UpdateComponent } from './components/update/update.component';
     MatCardModule,
     MatTabsModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
