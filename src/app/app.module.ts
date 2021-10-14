@@ -9,8 +9,9 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/login/register.component';
-import { GameComponent } from './components/game/game.component';
-
+import { GameboardComponent } from './components/gameboard/gameboard.component';
+import { DummyunitComponent } from './components/dummyunit/dummyunit.component';
+import { SquareComponent } from './components/square.component';
 // Angular Material Components
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
@@ -29,7 +30,9 @@ import { FormsModule } from '@angular/forms';
     NavbarComponent,
     HeroCardComponent,
     RegisterComponent,
-    GameComponent
+    GameboardComponent,
+    DummyunitComponent,
+    SquareComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,6 @@ import { FormsModule } from '@angular/forms';
     MatTabsModule,
     MatInputModule,
     FormsModule
-    
   ],
   providers: [],
   bootstrap: [AppComponent]
