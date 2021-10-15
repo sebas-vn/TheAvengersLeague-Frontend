@@ -1,0 +1,35 @@
+<h1 class = "center">Account information change</h1>
+<div class = "center">
+    <div class = "input">
+        <form>
+            <div class = "form-row">
+                <mat-form-field class = "form-group center">
+                    <mat-label>{{user.firstName}}</mat-label>
+                    <input matInput [(ngModel)]="user.firstName" name="fname" class="form-control" id="inputFirstName" placeholder="Noah">
+                </mat-form-field>
+                <mat-form-field class = "form-group center">
+                    <mat-label>{{user.lastName}}</mat-label>
+                    <input matInput [(ngModel)]="user.lastName" name="lname" class="form-control" id="inputLastName">
+                </mat-form-field>
+            </div>
+            <div class = "form-row">
+                <mat-form-field class = "form-group center">
+                    <mat-label>{{user.username}}</mat-label>
+                    <input matInput [(ngModel)] = "user.username" type = "text" name = "username" class = "form-control">
+                </mat-form-field>
+                <br>
+                <mat-form-field class = "form-group center">
+                    <mat-label>{{user.email}}</mat-label>
+                    <input matInput [(ngModel)] = "user.email" type = "text" name = "email" class = "form-control">
+                </mat-form-field>
+                <br>
+                <mat-form-field class = "form-group center">
+                    <mat-label>{{user.password}}</mat-label>
+                    <input matInput [(ngModel)] = "user.password" type = "text" name = "password" class = "form-control">
+                </mat-form-field>
+            </div>
+            <br>
+            <button type = "submit" class = "btn center" (click) = "update()">Update</button>
+        </form>
+    </div>
+</div>

@@ -16,16 +16,15 @@ export class RegisterComponent implements OnInit {
   constructor(private userService: UserService, private http: HttpClient) { }
 
   ngOnInit(): void {
- 
+    
 
   }
   public registerUser(): void
   {
-    console.log(this.user);
     this.userService.registerUser(this.user)
       .subscribe( // subscribe to the data returned and do something like generate client message
-        data => this.clientMessage.message = `Successfully registered ${data.firstName}`,   // console.log(`successfully added ${data.firstName}`)
-        error => this.clientMessage.message = `Something went wrong. Error: ${error}` // console.error(`We got an error: ${error}` 
+        data => {this.user = data; this.clientMessage.message = `Successfully registered ${data.firstName}`},   // console.log(`successfully added ${data.firstName}`)
+        error => {this.clientMessage.message = `Something went wrong. Error: ${error}`; console.log(error)} // console.error(`We got an error: ${error}` 
       )
   }
 }

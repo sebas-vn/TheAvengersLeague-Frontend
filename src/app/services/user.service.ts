@@ -1,3 +1,4 @@
+import { AppComponent } from './../app.component';
 
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
@@ -23,6 +24,13 @@ export class UserService {
       catchError(this.handleError) // passing a callback
     )
   }
+  public logOut(): Observable<any>
+  {
+    return this.http.get(`${sendUrl}api/user/logout`)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
   public findByUsername(username: string): Observable<User> {
 
     return this.http.get<User>(`${sendUrl}/find/${username}`)
@@ -44,7 +52,7 @@ export class UserService {
       `)
     }
     // throwError is an Observable from rxJS
-    return throwError('Something bad happened; please try again later')
+    return throwError('Something bad happened; fuck all kinds of duck')
   }
 }
 

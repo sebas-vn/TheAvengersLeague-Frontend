@@ -5,7 +5,7 @@
 export const environment = {
   production: false
 };
-export const sendUrl =  'http://talbackend-env.eba-ejssdhpt.us-east-2.elasticbeanstalk.com/';
+export const sendUrl =  'http://avengers-league-env.eba-wxwvh3zg.us-east-2.elasticbeanstalk.com/';
 
 export const accessToken = 4449795955097088;
 
