@@ -5,13 +5,13 @@
     </div>
 
     <mat-grid-list cols="12" rowHeight="700px" gutterSize="2rem">
-        <mat-grid-tile [colspan]="9">
+        <mat-grid-tile [colspan]="12">
 
             <div class="tile-container">
                 <mat-tab-group animationDuration="0ms" dynamicHeight>
                     <mat-tab label="Available Cards"> 
                     
-                        <button mat-stroked-button color="accent" (click)="getHero()">Get IronMan</button>
+                        <button mat-raised-button color="accent" (click)="getHero()" style="margin-top: 20px; width: 100%;">GET DUMMY HERO</button>
 
                         <app-hero-card [heroes]="heroes"></app-hero-card>
                     
@@ -19,7 +19,9 @@
 
                     <mat-tab label="Decks"> 
 
-                        content1
+                        <button mat-raised-button color="accent" (click)="getHero()" style="margin-top: 20px; width: 100%;">GET DUMMY HERO</button>
+
+                        <app-ingame-card-hero [heroes]="heroes"></app-ingame-card-hero>
                         
                     </mat-tab>
                 </mat-tab-group>
@@ -27,7 +29,7 @@
 
         </mat-grid-tile>
 
-        <mat-grid-tile [colspan]="3">
+<!--         <mat-grid-tile [colspan]="3">
 
             <div class="tile-container-friends">
                 <span class="tile-container-title"> Friends </span>
@@ -36,6 +38,6 @@
                 </div>
             </div>
 
-        </mat-grid-tile>
+        </mat-grid-tile> -->
     </mat-grid-list>
 </div>

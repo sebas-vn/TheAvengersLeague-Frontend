@@ -20,7 +20,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { HeroCardComponent } from './components/hero-card/hero-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatChipsModule } from '@angular/material/chips';
+import { IngameCardHeroComponent } from './components/ingame-card-hero/ingame-card-hero.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import {MatInputModule} from '@angular/material/input';
     HomeComponent,
     NavbarComponent,
     HeroCardComponent,
-    RegisterComponent
+    RegisterComponent,
+    IngameCardHeroComponent
   ],
   imports: [
     BrowserModule,
@@ -41,8 +45,9 @@ import {MatInputModule} from '@angular/material/input';
     MatButtonModule,
     MatCardModule,
     MatTabsModule,
-    MatInputModule
-    
+    MatInputModule,
+    FormsModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
