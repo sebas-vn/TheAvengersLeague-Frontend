@@ -22,6 +22,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { FormsModule } from '@angular/forms';
     MatCardModule,
     MatTabsModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    DragDropModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
