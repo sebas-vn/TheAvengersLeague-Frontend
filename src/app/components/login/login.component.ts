@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ClientMessage } from 'src/app/models/client-message';
-import { User } from 'src/app/models/user';
 import { LoginService } from 'src/app/services/login.service';
+import { LoginMessage } from 'src/app/models/login-message';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,21 +9,44 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  user = new User('', '', '', '', '');
-  public clientMessage = new ClientMessage('');
 
+  login: LoginMessage = new LoginMessage('','');
+  status: string = '';
 
-  constructor(private loginService: LoginService, private http: HttpClient) { }
+  constructor(private router: Router, private loginService: LoginService) { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
   public logIn(): void
   {
-    this.loginService.logIn(this.user)
-    .subscribe(
-      data => {this.user = data; console.log(`${data}`)},
-      error => console.log(error)
-    );
+    if(this.login.password.length > 0 && this.login.username.length > 0) {
+      this.loginService.logIn(this.login)
+      .subscribe(
+        data => {
+          console.log(`Login: ${JSON.stringify(data.headers.keys())}`);
+          //if('username' in data && data.username == this.login.username)
+          //  this.router.navigate(['/home']);
+        },
+        error => {
+          console.log(`Error occured trying to login: ${error}`);
+          this.showLoginStatus(error);
+        }
+      );
+    }
+  }
+
+  private showLoginStatus(error: string): void
+  {
+    this.status = 'Failed to login';
+        
+    if(error.startsWith('No user exists')) {
+      this.status = 'Incorrect username or password';
+    }
+    if(error.startsWith('Incorrect password')) {
+      this.status = 'Incorrect username or password';
+    }
+    if(error.startsWith('Logout before')) {
+      this.status = 'You are already logged in';
+    }
   }
 
 }

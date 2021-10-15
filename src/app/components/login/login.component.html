@@ -3,14 +3,16 @@
     <form>
         <mat-form-field class = "form-group center">
             <mat-label>Username</mat-label>
-            <input matInput [(ngModel)] = "user.username" type = "text" name = "username" class = "form-control">
+            <input matInput [(ngModel)] = "login.username" type = "text" name = "username" class = "form-control">
         </mat-form-field>
         <br>
         <mat-form-field class = "form-group center">
             <mat-label>Password</mat-label>
-            <input matInput [(ngModel)] = "user.password" type = "text" name = "password" class = "form-control">
+            <input matInput [(ngModel)] = "login.password" type = "text" name = "password" class = "form-control">
         </mat-form-field>
         <br>
         <button type="submit" class = "btn center" (click)=logIn()>Login</button>
+        <br>
+        <label><i>{{ status }}</i></label>
     </form>
 </div>
