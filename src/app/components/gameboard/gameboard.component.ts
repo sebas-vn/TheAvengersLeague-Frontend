@@ -2,7 +2,7 @@ import { SquareComponent } from './../square.component';
 import { Coord } from './../coord';
 import { Component, OnInit } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-game',
@@ -11,7 +11,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class GameboardComponent implements OnInit {
   
-  oneSixtyNine = new Array(169).fill(0).map((_, i) => i);
+  oneSixtyNine: any[] = new Array(169).fill(0).map((_, i) => i);
+  testObject = {};
 
   xy(i): Coord {
     return {
@@ -21,30 +22,24 @@ export class GameboardComponent implements OnInit {
   }
 
   isBlack({ x, y }: Coord) {
-    if (x == 0|| x == 12) {
-      return true;
-    } else if (x == 1 && y <=4 || x == 1 && y >= 8 || x == 11 && y <=4 || x == 11 && y >= 8) {
-      return true;
-    } else if (x == 2 && y <=3 || x == 2 && y >= 9 || x == 10 && y <=3 || x == 10 && y >= 9) {
-      return true;
-    } else if (x == 3 && y <=2 || x == 3 && y >= 10 || x == 9 && y <=2 || x == 9 && y >= 10) {
-      return true;
-    } else if (x == 4 && y <=1 || x == 4 && y >= 11 || x == 8 && y <=1 || x == 8 && y >= 11) {
-      return true;
-    } else if (x == 5 && y <=0 || x == 5 && y >= 12 || x == 7 && y <=0 || x == 7 && y >= 12) {
-      return true;
-    } else if (x == 6 && y == 0 || x == 6 && y == 12) {
-      return true;
+    var boardsize: number = 10;
+    var radius: number = 6;
+    var half: number = boardsize/2 + 1;
+
+    if (x > 0 && x < 12 && y > 0 && y < 12) {
+      if(Math.abs(x-half) + Math.abs(y-half) <= radius)
+        return false;
     }
+    return true;
   }
 
   dummyPosition$ = this.game.dummyPosition$
 
-  drop(event: CdkDragDrop<SquareComponent>) {
+/*   drop(event: CdkDragDrop<string[]>) {
     console.log(event.previousIndex);
     console.log(event.currentIndex);
   }
-
+ */
   handleSquareClick(pos: Coord) {
     console.log(pos);
     if (this.game.canMove(pos)) {
@@ -52,9 +47,27 @@ export class GameboardComponent implements OnInit {
     }
   }
 
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(event.container, event.previousContainer);
+    console.log(event.container.data, event.previousIndex, event.currentIndex);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
+  }
+
   constructor(private game: GameService) { }
 
   ngOnInit(): void {
+    console.log(this.oneSixtyNine);  
+    this.oneSixtyNine.forEach((e) => {
+      this.testObject[e] = ["ele", "ala"];
+    })  
   }
 
 }
