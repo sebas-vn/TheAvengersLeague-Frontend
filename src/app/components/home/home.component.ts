@@ -17,8 +17,9 @@ export class HomeComponent implements OnInit {
 
   getHero() {
     this.heroService.getSuperHero()
-      .subscribe(
-        data => this.heroes.push(data),
+      .subscribe(data => {
+          this.heroes.push(data);
+        },
         error => console.error(error)
       );
   }

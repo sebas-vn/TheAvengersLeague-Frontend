@@ -1,0 +1,9 @@
+<div class="board">
+    <ng-container *ngIf="dummyPosition$|async as dp">
+        <div *ngFor="let i of oneSixtyNine">
+            <app-square *ngIf="xy(i) as pos" [black]="isBlack(pos)" cdkDropList (cdkDropListDropped)="drop($event)">
+                <app-dummyunit *ngIf="pos.x === dp.x && pos.y === dp.y" cdkDrag></app-dummyunit>
+            </app-square>
+        </div>
+    </ng-container>
+</div>
