@@ -1,5 +1,7 @@
+import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ClientMessage } from 'src/app/models/client-message';
 import { User } from 'src/app/models/user';
 import { UpdateService } from 'src/app/services/update.service';
@@ -10,12 +12,13 @@ import { UpdateService } from 'src/app/services/update.service';
   styleUrls: ['./update.component.css']
 })
 export class UpdateComponent implements OnInit {
-  public user = new User('', '', '', '', '');
+  public user: User | undefined;
   public clientMessage = new ClientMessage('');
   postId: any;
-  constructor(private updateService: UpdateService, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private updateService: UpdateService, private http: HttpClient, private location: Location) { }
 
   ngOnInit(): void {
+    this.getUser()
   }
   public update(): void
   {
@@ -25,9 +28,11 @@ export class UpdateComponent implements OnInit {
       this.updateService.updateUser(this.user);
     }
   }
-  public getUser(id: number): void
+  public getUser(): void
   {
-    this.updateService.getUser(id);
+    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
+    this.updateService.getUser(id)
+     .subscribe(user => this.user = user);
   }
 
 }

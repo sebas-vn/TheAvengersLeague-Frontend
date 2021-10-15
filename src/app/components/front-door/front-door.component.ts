@@ -11,5 +11,4 @@ export class FrontDoorComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

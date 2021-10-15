@@ -9,14 +9,14 @@ import { HeroCardComponent } from './components/hero-card/hero-card.component';
 import { FrontDoorComponent } from './components/front-door/front-door.component';
 
 const routes: Routes = [
-  {path: '', component: RegisterComponent},
+  {path: '', redirectTo: '/front-door', pathMatch: 'full'},
   {path: 'register', component: RegisterComponent},
-  {path: 'update', component: UpdateComponent},
+  {path: 'update/id:', component: UpdateComponent},
   {path: 'home', component: HomeComponent},
   {path: 'navbar', component: NavbarComponent},
   {path: 'login', component: LoginComponent},
   {path: 'hero-card', component: HeroCardComponent},
-  {path: 'front-door', component: FrontDoorComponent}
+  {path: 'front-door', component: FrontDoorComponent},
 ];
 
 @NgModule({

@@ -1,9 +1,5 @@
 <h1 class = "center">Welcome to Avengers League</h1>
-<div *ngIf = "login == false; else elseBlock">
-    <app-front-door></app-front-door>
-</div>
-<ng-template #elseBlock>
     <app-navbar></app-navbar>
     <router-outlet></router-outlet>
-</ng-template>
+
 

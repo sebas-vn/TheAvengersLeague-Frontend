@@ -35,7 +35,7 @@ import { FrontDoorComponent } from './components/front-door/front-door.component
     RegisterComponent,
     UpdateComponent,
     LoginComponent,
-    FrontDoorComponent
+    FrontDoorComponent,
   ],
   imports: [
     BrowserModule,

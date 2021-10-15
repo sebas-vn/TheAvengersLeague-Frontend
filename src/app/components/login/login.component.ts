@@ -20,7 +20,11 @@ export class LoginComponent implements OnInit {
   }
   public logIn(): void
   {
-    this.loginService.logIn(this.user.password)
+    this.loginService.logIn(this.user)
+    .subscribe(
+      data => {this.user = data; console.log(`${data}`)},
+      error => console.log(error)
+    );
   }
 
 }

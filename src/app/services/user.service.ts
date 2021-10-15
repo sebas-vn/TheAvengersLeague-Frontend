@@ -19,11 +19,17 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   }
   public registerUser(user: User): Observable<User> {
-    AppComponent.logIn();
     return this.http.post<User>(`${sendUrl}api/user/add`, user, this.httpOptions) // url, user, this.httpOptions
     .pipe( // we are calling a method on the data returned in the observable
       catchError(this.handleError) // passing a callback
     )
+  }
+  public logOut(): Observable<any>
+  {
+    return this.http.get(`${sendUrl}api/user/logout`)
+      .pipe(
+        catchError(this.handleError)
+      )
   }
   public findByUsername(username: string): Observable<User> {
 
@@ -46,7 +52,7 @@ export class UserService {
       `)
     }
     // throwError is an Observable from rxJS
-    return throwError('Something bad happened; please try again later')
+    return throwError('Something bad happened; fuck all kinds of duck')
   }
 }
 
