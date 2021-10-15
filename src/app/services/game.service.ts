@@ -1,4 +1,3 @@
-import { GameboardComponent } from './../components/gameboard/gameboard.component';
 import { Coord } from './../components/coord';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -8,12 +7,12 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class GameService {
 
-  dummyPosition$ = new BehaviorSubject<Coord>({ x:2, y:5 });
+  dummyPosition$ = new BehaviorSubject<Coord>({ x:6, y:6 });
   currentPosition: Coord;
 
   constructor() {
-    this.dummyPosition$.subscribe(kp => {
-      this.currentPosition = kp;
+    this.dummyPosition$.subscribe(dp => {
+      this.currentPosition = dp;
     })
   }
 
@@ -25,8 +24,8 @@ export class GameService {
     const { x, y } = this.currentPosition;
     const dx = to.x - x;
     const dy = to.y - y;
-
-    if (to.x == 0 && y != 6 || to.x == 12 && y != 6) {
+    
+    if (to.x == 0|| to.x == 12) {
       return false;
     } else if (to.x == 1 && to.y <=4 || to.x == 1 && to.y >= 8 || to.x == 11 && to.y <=4 || to.x == 11 && to.y >= 8) {
       return false;
@@ -37,6 +36,8 @@ export class GameService {
     } else if (to.x == 4 && to.y <=1 || to.x == 4 && to.y >= 11 || to.x == 8 && to.y <=1 || to.x == 8 && to.y >= 11) {
       return false;
     } else if (to.x == 5 && to.y <=0 || to.x == 5 && to.y >= 12 || to.x == 7 && to.y <=0 || to.x == 7 && to.y >= 12) {
+      return false;
+    } else if (to.x == 6 && to.y == 0 || to.x == 6 && to.y == 12) {
       return false;
     }
     return (Math.abs(dx) + Math.abs(dy) === 1) || (Math.abs(dx) + Math.abs(dy) === 2);

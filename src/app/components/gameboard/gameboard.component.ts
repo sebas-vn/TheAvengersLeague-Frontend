@@ -1,6 +1,8 @@
+import { SquareComponent } from './../square.component';
+import { Coord } from './../coord';
 import { Component, OnInit } from '@angular/core';
-import { Coord } from '../coord';
 import { GameService } from 'src/app/services/game.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-game',
@@ -19,7 +21,7 @@ export class GameboardComponent implements OnInit {
   }
 
   isBlack({ x, y }: Coord) {
-    if (x == 0 && y != 6 || x == 12 && y != 6) {
+    if (x == 0|| x == 12) {
       return true;
     } else if (x == 1 && y <=4 || x == 1 && y >= 8 || x == 11 && y <=4 || x == 11 && y >= 8) {
       return true;
@@ -31,12 +33,20 @@ export class GameboardComponent implements OnInit {
       return true;
     } else if (x == 5 && y <=0 || x == 5 && y >= 12 || x == 7 && y <=0 || x == 7 && y >= 12) {
       return true;
+    } else if (x == 6 && y == 0 || x == 6 && y == 12) {
+      return true;
     }
   }
 
   dummyPosition$ = this.game.dummyPosition$
 
+  drop(event: CdkDragDrop<SquareComponent>) {
+    console.log(event.previousIndex);
+    console.log(event.currentIndex);
+  }
+
   handleSquareClick(pos: Coord) {
+    console.log(pos);
     if (this.game.canMove(pos)) {
       this.game.moveDummy(pos);
     }
