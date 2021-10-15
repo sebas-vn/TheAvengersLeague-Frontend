@@ -12,21 +12,24 @@ const url = `https://superheroapi.com/api/${accessToken}`;
 })
 export class SuperheroService {
 
-  
-
   constructor(private http: HttpClient) { }
 
   httpOption = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   }
 
-
   public getSuperHero(): Observable<any> {
-    return this.http.get<any>(`${url}/41`)
+    let rand = Math.floor(Math.random() * 255);
+    return this.http.get<any>(`${url}/${rand}`)
       .pipe(catchError(this.handleError));
   }
 
+  public getSuperHeroImage(url: string): Observable<any> {
+    return this.http.get<any>(url);
+  }
+
   private handleError(httpError: HttpErrorResponse) {
+    console.log(httpError);
     if (httpError.error instanceof ErrorEvent) {
       // A client-side or network error occurred, handle it accordingly
       console.log('An error occurred: ', httpError.error.message);

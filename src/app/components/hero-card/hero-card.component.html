@@ -1,14 +1,28 @@
-<ng-container *ngIf="heroes.length > 0">
-    <mat-card *ngFor="let hero of heroes" class="hero-card">
-        <mat-card-header>
-          <mat-card-title> {{ hero.name }} </mat-card-title>
-          <mat-card-subtitle> {{ hero.work.occupation }} </mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image class="hero-image" [src]="hero.image.url" alt="Hero Image">
-        <!-- Maybe add a mat-card-content -->
-        <mat-card-actions>
-          <button mat-button>TRADE</button>
-          <button mat-button>BUY</button>
-        </mat-card-actions>
-    </mat-card>
-</ng-container>
+<div class="hero-container" *ngIf="heroes.length > 0">
+  <mat-card *ngFor="let hero of heroes" class="hero-card">
+      <mat-card-header>
+        <mat-card-title> {{ hero.name }} </mat-card-title>
+        <mat-card-subtitle class="line-clamp"> {{ hero.work.occupation }} </mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image class="hero-image" [src]="hero.image.url" (error)="updateUrl($event)" alt="Hero Image">
+      <!-- Maybe add a mat-card-content -->
+      <mat-card-actions>
+        <button mat-raised-button color="accent" 
+        (click)="currentViewStats.includes(hero.id) ? disableStatView(hero.id) : enableStatView(hero.id)" >
+          {{ (currentViewStats.includes(hero.id)) ? 'Close Stats' : 'View Stats'}}
+        </button>
+      </mat-card-actions>
+      <!-- mat-card-actions -->
+
+      <div class="stats" *ngIf="currentViewStats.includes(hero.id)">
+        <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
+          <mat-chip *ngFor="let stat of hero.powerstats | keyvalue" [selectable]="false" color="accent">
+            <span class="stat_name">{{ stat.key | titlecase}}</span> 
+            <div class="stat_value_box">
+              <span class="stat_value">{{ (stat.value == 'null') ? n/a : stat.value }}</span>
+            </div>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+  </mat-card>
+</div>
