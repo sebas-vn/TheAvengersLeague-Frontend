@@ -1,0 +1,39 @@
+.game {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.space {
+    background-color: #d9d9d9;
+    width: 60px;
+    height: 60px;
+    border: 2px solid black;
+}
+
+.wall {
+    background-color:black;
+    width: 60px;
+    height: 60px;
+}
+
+.base {
+    background-color: lightgreen;
+    border: 2px solid black;
+}
+
+.hand {
+    display: grid;
+    background-color: lightblue;
+    width: 70px;
+    height: 70px;
+    border: 1px solid black;
+}
+
+.board {
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(13, 70px);
+    grid-template-rows: repeat(13, 70px);
+}

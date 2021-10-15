@@ -3,14 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-
 // Custom Components
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/login/register.component';
-
+import { GameboardComponent } from './components/gameboard/gameboard.component';
+import { DummyunitComponent } from './components/dummyunit/dummyunit.component';
+import { SquareComponent } from './components/square.component';
+import { IngameCardHeroComponent } from './components/ingame-card-hero/ingame-card-hero.component';
 
 // Angular Material Components
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -23,7 +25,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
-import { IngameCardHeroComponent } from './components/ingame-card-hero/ingame-card-hero.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { IngameCardHeroComponent } from './components/ingame-card-hero/ingame-ca
     NavbarComponent,
     HeroCardComponent,
     RegisterComponent,
-    IngameCardHeroComponent
+    IngameCardHeroComponent,
+    GameboardComponent,
+    DummyunitComponent,
+    SquareComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +53,9 @@ import { IngameCardHeroComponent } from './components/ingame-card-hero/ingame-ca
     MatTabsModule,
     MatInputModule,
     FormsModule,
-    MatChipsModule
+    MatChipsModule,
+    DragDropModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
