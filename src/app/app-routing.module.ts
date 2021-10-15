@@ -6,8 +6,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeroCardComponent } from './components/hero-card/hero-card.component';
 import { FrontDoorComponent } from './components/front-door/front-door.component';
 import { RegisterComponent } from './components/register/register.component';
-import { UpdateComponent } from './components/update/update.component';
 import { LoginComponent } from './components/login/login.component';
+import { UpdateComponent } from './components/update/update.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/front-door', pathMatch: 'full'},

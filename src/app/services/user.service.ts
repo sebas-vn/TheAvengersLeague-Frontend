@@ -52,7 +52,7 @@ export class UserService {
       `)
     }
     // throwError is an Observable from rxJS
-    return throwError('Something bad happened; fuck all kinds of duck')
+    return throwError(httpError.error)
   }
 }
 
