@@ -22,9 +22,8 @@ export class LoginComponent implements OnInit {
       this.loginService.logIn(this.login)
       .subscribe(
         data => {
-          console.log(`Login: ${JSON.stringify(data.headers.keys())}`);
-          //if('username' in data && data.username == this.login.username)
-          //  this.router.navigate(['/home']);
+          if('username' in data && data.username == this.login.username)
+            this.router.navigate(['/home']);
         },
         error => {
           console.log(`Error occured trying to login: ${error}`);

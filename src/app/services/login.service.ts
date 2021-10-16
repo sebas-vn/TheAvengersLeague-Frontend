@@ -13,14 +13,14 @@ import { User } from '../models/user';
 export class LoginService {
 
   constructor(private userService: UserService, private http: HttpClient) {  }
+  private httpOptions = {
+    withCredentials: true,
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  }
 
-  public logIn(login: LoginMessage) : Observable<HttpResponse<User>>
+  public logIn(login: LoginMessage) : Observable<User>
   {
-    const response =  this.http.post<User>(`${sendUrl}api/user/login`, login, {
-      observe: 'response',
-      withCredentials: true,
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    } )
+    const response =  this.http.post<User>(`${sendUrl}api/user/login`, login, this.httpOptions )
     .pipe( // we are calling a method on the data returned in the observable
       catchError(this.handleError) // passing a callback
     );
