@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { sendUrl } from 'src/environments/environment';
+import { ModifyUser } from '../models/modify-user';
 
 
 @Injectable({
@@ -40,21 +41,22 @@ export class UserService {
       )
   }
 
-  private handleError(httpError: HttpErrorResponse) {
+  public modifyAccount(modify: ModifyUser): Observable<User>
+  {
+    return this.http.post<User>(`${sendUrl}api/user/modify`, modify, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
-    if (httpError.error instanceof ErrorEvent) {
-      // A client-side or network error occured, handle it accordingly
-      console.log('And error occured: ', httpError.error.message)
-    } else {
-      // the backend returned an unsuccessful response code
-      // the reponse body might have clues for what went wrong
-      console.error(`
-        Backend returned code ${httpError.status}, 
-        body was: ${httpError.error}
-      `)
-    }
+  private handleError(httpError: HttpErrorResponse) {
     // throwError is an Observable from rxJS
-    return throwError('Something bad happened')
+    if('error' in httpError.error)
+      return throwError(httpError.error.error)
+    else if('status' in httpError.error)
+      return throwError(httpError.error.status)
+    else
+      return throwError('Something went very wrong trying to login')
   }
 }
 

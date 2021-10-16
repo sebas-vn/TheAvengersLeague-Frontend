@@ -37,13 +37,13 @@ export class LoginComponent implements OnInit {
   {
     this.status = 'Failed to login';
         
-    if(error.startsWith('No user exists')) {
+    if(error.startsWith('no user exists')) {
       this.status = 'Incorrect username or password';
     }
-    if(error.startsWith('Incorrect password')) {
+    if(error.startsWith('incorrect password')) {
       this.status = 'Incorrect username or password';
     }
-    if(error.startsWith('Logout before')) {
+    if(error.startsWith('logout before')) {
       this.status = 'You are already logged in';
     }
   }

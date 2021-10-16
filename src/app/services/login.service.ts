@@ -28,18 +28,6 @@ export class LoginService {
   }
   
   private handleError(httpError: HttpErrorResponse) {
-
-    if (httpError.error instanceof ErrorEvent) {
-      // A client-side or network error occured, handle it accordingly
-      console.log('And error occured: ', httpError.error.message)
-    } else {
-      // the backend returned an unsuccessful response code
-      // the reponse body might have clues for what went wrong
-      console.error(`
-        Backend returned code ${httpError.status}, 
-        body was: ${JSON.stringify(httpError.error)}
-      `)
-    }
     // throwError is an Observable from rxJS
     if('error' in httpError.error)
       return throwError(httpError.error.error)
