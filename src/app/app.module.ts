@@ -44,7 +44,7 @@ import { GameboardSquareComponent } from './components/gameboard-square/gameboar
     GameboardComponent,
     DummyunitComponent,
     SquareComponent,
-    GameboardSquareComponent
+    GameboardSquareComponent,
     DeckBuilderComponent
   ],
   imports: [
