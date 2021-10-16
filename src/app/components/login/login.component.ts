@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
       this.loginService.logIn(this.login)
       .subscribe(
         data => {
-          if('username' in data && data.username == this.login.username)
+          if('email' in data && data.username == this.login.username)
             this.router.navigate(['/home']);
         },
         error => {

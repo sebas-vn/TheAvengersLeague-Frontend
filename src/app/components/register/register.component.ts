@@ -3,6 +3,7 @@ import { ClientMessage } from 'src/app/models/client-message';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ export class RegisterComponent implements OnInit {
   public user = new User('', '', '', '', '');
   public clientMessage = new ClientMessage('');
   postId: any;
-  constructor(private userService: UserService, private http: HttpClient) { }
+  constructor(private router: Router, private userService: UserService, private http: HttpClient) { }
 
   ngOnInit(): void {
     
@@ -23,8 +24,14 @@ export class RegisterComponent implements OnInit {
   {
     this.userService.registerUser(this.user)
       .subscribe( // subscribe to the data returned and do something like generate client message
-        data => {this.user = data; this.clientMessage.message = `Successfully registered ${data.firstName}`},   // console.log(`successfully added ${data.firstName}`)
-        error => {this.clientMessage.message = `Something went wrong. Error: ${error}`; console.log(error)} // console.error(`We got an error: ${error}` 
+        data => {
+          this.clientMessage.message = `Successfully registered ${data.firstName}`;
+          this.router.navigate(['/home']);
+        },
+        error => {
+          this.clientMessage.message = `Something went wrong. Error: ${error}`; 
+          console.log(error)
+        }
       )
   }
 }

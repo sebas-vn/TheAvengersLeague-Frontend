@@ -1,5 +1,3 @@
-import { AppComponent } from './../app.component';
-
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
@@ -16,28 +14,32 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
   httpOptions = {
+    withCredentials: true,
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   }
+
   public registerUser(user: User): Observable<User> {
     return this.http.post<User>(`${sendUrl}api/user/add`, user, this.httpOptions) // url, user, this.httpOptions
     .pipe( // we are calling a method on the data returned in the observable
       catchError(this.handleError) // passing a callback
     )
   }
+
+  public getCurrent(): Observable<User> {
+    return this.http.get<User>(`${sendUrl}api/user/get`, this.httpOptions)
+    .pipe( // we are calling a method on the data returned in the observable
+      catchError(this.handleError) // passing a callback
+    )
+  }
+
   public logOut(): Observable<any>
   {
-    return this.http.get(`${sendUrl}api/user/logout`)
+    return this.http.get(`${sendUrl}api/user/logout`, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       )
   }
-  public findByUsername(username: string): Observable<User> {
 
-    return this.http.get<User>(`${sendUrl}/find/${username}`)
-      .pipe(
-        catchError(this.handleError)
-      )
-  }
   private handleError(httpError: HttpErrorResponse) {
 
     if (httpError.error instanceof ErrorEvent) {
@@ -52,7 +54,7 @@ export class UserService {
       `)
     }
     // throwError is an Observable from rxJS
-    return throwError('Something bad happened; fuck all kinds of duck')
+    return throwError('Something bad happened')
   }
 }
 
