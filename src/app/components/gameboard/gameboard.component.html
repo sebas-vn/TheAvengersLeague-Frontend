@@ -2,10 +2,19 @@
     <div class="board">
         <ng-container *ngIf="dummyPosition$|async as dp">
             <ng-container *ngFor="let i of oneSixtyNine">
-                <app-square *ngIf="xy(i) as pos" [black]="isBlack(pos)" cdkDropList [cdkDropListData]="testObject[i]" (cdkDropListDropped)="drop($event)">
+                <app-square *ngIf="xy(i) as pos" [black]="isBlack(pos)" cdkDropList 
+                [cdkDropListData]="testObject[i]" 
+                (cdkDropListDropped)="drop($event)"
+                [ngClass]="{'single-item-container': (testObject[i].length <= 1), 'double-item-container': (testObject[i].length > 1)}">
                     <!-- <app-dummyunit *ngIf="pos.x === dp.x && pos.y === dp.y" cdkDrag></app-dummyunit> -->
                     <ng-container *ngIf="!isBlack(pos)">
-                        <div *ngFor="let item of testObject[i]" cdkDrag>{{item}}</div>
+
+                        <app-dummyunit *ngFor="let item of testObject[i]; index as k" 
+                        [name]="i" 
+                        [squareArray]="testObject[i]" 
+                        [index]="k" cdkDrag>
+                        </app-dummyunit>
+
                     </ng-container>
                 </app-square>
             </ng-container>
