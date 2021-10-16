@@ -1,8 +1,6 @@
-import { AppComponent } from './../../app.component';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { HttpClient } from '@angular/common/http';
-import { sendUrl } from 'src/environments/environment';
 import { User } from 'src/app/models/user';
 
 @Component({

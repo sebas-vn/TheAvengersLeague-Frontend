@@ -20,4 +20,19 @@
             </ng-container>
         </ng-container>
     </div>
+    
+    <div class="hand">
+        <ng-container *ngFor="let i of three">
+            <app-square
+            cdkDropList
+            id="hand"
+            [cdkDropListData]="testInHand[i]"
+            [cdkDropListEnterPredicate]="falsePredicate"
+            (cdkDropListDropped)="drop($event)">
+                <div *ngFor="let item of testInHand[i]" cdkDrag>{{item}}</div>
+            </app-square>
+        </ng-container>
+    </div>
 </div>
+
+    

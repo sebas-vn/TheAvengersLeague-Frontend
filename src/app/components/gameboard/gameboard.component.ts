@@ -1,9 +1,13 @@
-import { SquareComponent } from './../square.component';
 import { Coord } from './../coord';
+<<<<<<< HEAD
 import { Component, Input, OnInit } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { take } from 'rxjs/operators';
+=======
+import { Component, OnInit } from '@angular/core';
+import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+>>>>>>> 807b664df5f7f3aece2cee816e7a4fb0bc83e71f
 
 @Component({
   selector: 'app-game',
@@ -25,6 +29,10 @@ export class GameboardComponent implements OnInit {
       this.testObject[e] = [1];
     })  
   }
+  three: any[] = new Array(3).fill(0).map((_, i) => i);
+
+  testOnBoard = {};
+  testInHand = {};
 
   xy(i): Coord {
     return {
