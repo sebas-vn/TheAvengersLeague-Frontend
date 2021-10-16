@@ -5,9 +5,9 @@
 
 .space {
     background-color: #d9d9d9;
-    width: 60px;
-    height: 60px;
-    border: 2px solid black;
+    width: 65px;
+    height: 65px;
+    border: 1px solid black;
 }
 
 .wall {
@@ -22,11 +22,11 @@
 }
 
 .hand {
+    justify-content: center;
+    padding: 1%;
     display: grid;
-    background-color: lightblue;
-    width: 70px;
-    height: 70px;
-    border: 1px solid black;
+    grid-template-columns: 70px 70px 70px;
+    grid-template-rows: 70px;
 }
 
 .board {
