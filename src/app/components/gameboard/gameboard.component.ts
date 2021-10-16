@@ -1,8 +1,6 @@
-import { SquareComponent } from './../square.component';
 import { Coord } from './../coord';
 import { Component, OnInit } from '@angular/core';
-import { GameService } from 'src/app/services/game.service';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-game',
@@ -12,7 +10,10 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 export class GameboardComponent implements OnInit {
   
   oneSixtyNine: any[] = new Array(169).fill(0).map((_, i) => i);
-  testObject = {};
+  three: any[] = new Array(3).fill(0).map((_, i) => i);
+
+  testOnBoard = {};
+  testInHand = {};
 
   xy(i): Coord {
     return {
@@ -33,41 +34,37 @@ export class GameboardComponent implements OnInit {
     return true;
   }
 
-  dummyPosition$ = this.game.dummyPosition$
-
-/*   drop(event: CdkDragDrop<string[]>) {
-    console.log(event.previousIndex);
-    console.log(event.currentIndex);
-  }
- */
-  handleSquareClick(pos: Coord) {
-    console.log(pos);
-    if (this.game.canMove(pos)) {
-      this.game.moveDummy(pos);
-    }
-  }
-
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event.container, event.previousContainer);
-    console.log(event.container.data, event.previousIndex, event.currentIndex);
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
+    if (event.isPointerOverContainer) {
+      console.log(event.container)
+      // console.log(event.container, event.previousContainer);
+      // console.log(event.container.data, event.previousIndex, event.currentIndex);
+      if (event.previousContainer === event.container) {
+        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      } else {
+        transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex);
+      }
     }
   }
 
-  constructor(private game: GameService) { }
+  falsePredicate() {
+    return false;
+  }
+
+  constructor() { }
 
   ngOnInit(): void {
-    console.log(this.oneSixtyNine);  
     this.oneSixtyNine.forEach((e) => {
-      this.testObject[e] = ["ele", "ala"];
+      this.testOnBoard[e] = ["test"];
     })  
+
+    this.three.forEach((e) => {
+      this.testInHand[e] = ["card"];
+    })
   }
 
 }

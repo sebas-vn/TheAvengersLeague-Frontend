@@ -1,14 +1,31 @@
 <div cdkDropListGroup>
     <div class="board">
-        <ng-container *ngIf="dummyPosition$|async as dp">
-            <ng-container *ngFor="let i of oneSixtyNine">
-                <app-square *ngIf="xy(i) as pos" [black]="isBlack(pos)" cdkDropList [cdkDropListData]="testObject[i]" (cdkDropListDropped)="drop($event)">
-                    <!-- <app-dummyunit *ngIf="pos.x === dp.x && pos.y === dp.y" cdkDrag></app-dummyunit> -->
-                    <ng-container *ngIf="!isBlack(pos)">
-                        <div *ngFor="let item of testObject[i]" cdkDrag>{{item}}</div>
-                    </ng-container>
-                </app-square>
-            </ng-container>
+        <ng-container *ngFor="let i of oneSixtyNine">
+            <app-square 
+            *ngIf="xy(i) as pos" 
+            [black]="isBlack(pos)" 
+            cdkDropList
+            [cdkDropListData]="testOnBoard[i]"
+            (cdkDropListDropped)="drop($event)">
+                <ng-container *ngIf="!isBlack(pos)">
+                    <div *ngFor="let item of testOnBoard[i]" cdkDrag>{{item}}</div>
+                </ng-container>
+            </app-square>
+        </ng-container>
+    </div>
+    
+    <div class="hand">
+        <ng-container *ngFor="let i of three">
+            <app-square
+            cdkDropList
+            id="hand"
+            [cdkDropListData]="testInHand[i]"
+            [cdkDropListEnterPredicate]="falsePredicate"
+            (cdkDropListDropped)="drop($event)">
+                <div *ngFor="let item of testInHand[i]" cdkDrag>{{item}}</div>
+            </app-square>
         </ng-container>
     </div>
 </div>
+
+    
