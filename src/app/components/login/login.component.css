@@ -5,9 +5,14 @@
 .alert {
     margin-top: 3%;
 }
-.center{
+
+.center {
     width: auto;
     margin: auto;
     padding: 10px;
     text-align: center
+}
+
+.warn-label {
+    color: red;
 }

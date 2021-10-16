@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from 'src/app/services/login.service';
+import { UserService } from 'src/app/services/user.service';
 import { LoginMessage } from 'src/app/models/login-message';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-login',
@@ -13,16 +14,17 @@ export class LoginComponent implements OnInit {
   login: LoginMessage = new LoginMessage('','');
   status: string = '';
 
-  constructor(private router: Router, private loginService: LoginService) { }
+  constructor(private router: Router, private userService: UserService) { }
   ngOnInit(): void {}
 
   public logIn(): void
   {
     if(this.login.password.length > 0 && this.login.username.length > 0) {
-      this.loginService.logIn(this.login)
+      this.userService.logIn(this.login)
       .subscribe(
         data => {
-          if('username' in data && data.username == this.login.username)
+          const user: User = data.body;
+          if('email' in data.body && user.username == this.login.username)
             this.router.navigate(['/home']);
         },
         error => {
@@ -37,13 +39,13 @@ export class LoginComponent implements OnInit {
   {
     this.status = 'Failed to login';
         
-    if(error.startsWith('No user exists')) {
+    if(error.startsWith('no user exists')) {
       this.status = 'Incorrect username or password';
     }
-    if(error.startsWith('Incorrect password')) {
+    if(error.startsWith('incorrect password')) {
       this.status = 'Incorrect username or password';
     }
-    if(error.startsWith('Logout before')) {
+    if(error.startsWith('logout before')) {
       this.status = 'You are already logged in';
     }
   }

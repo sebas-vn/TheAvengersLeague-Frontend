@@ -1,59 +1,127 @@
-import { AppComponent } from './../app.component';
-
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from "@angular/common/http";
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { sendUrl } from 'src/environments/environment';
-
+import { ModifyUser } from '../models/modify-user';
+import { UserInventory } from '../models/user-inventory';
+import { LoginMessage } from '../models/login-message';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  public user = new User('', '', '', '', '')
+
+  private static token: string = '';
 
   constructor(private http: HttpClient) { }
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+
+  private generateHeaders(): any {
+    return new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': this.getCookie('Token') });
   }
-  public registerUser(user: User): Observable<User> {
-    return this.http.post<User>(`${sendUrl}api/user/add`, user, this.httpOptions) // url, user, this.httpOptions
+
+  public logIn(login: LoginMessage) : Observable<HttpResponse<User>>
+  {
+    const response = this.http.post<User>(`${sendUrl}api/user/login`, login, {observe: 'response', headers: this.generateHeaders()} )
+    .pipe( // we are calling a method on the data returned in the observable
+      catchError(this.handleError) // passing a callback
+    );
+    response.subscribe(
+      resp => {
+        //UserService.token = resp.headers.get('authorization')
+        this.setCookie('Token', resp.headers.get('authorization'), 14)
+      }
+    );
+    return response;
+  }
+
+  public registerUser(user: User): Observable<HttpResponse<User>> {
+    const response = this.http.post<User>(`${sendUrl}api/user/add`, user, {observe: 'response', headers: this.generateHeaders()}) // url, user, this.httpOptions
+      .pipe( // we are calling a method on the data returned in the observable
+        catchError(this.handleError) // passing a callback
+      )
+    response.subscribe(
+      resp => this.setCookie('Token', resp.headers.get('authorization'), 14)
+    );
+    return response;
+  }
+
+  public logOut(): Observable<HttpResponse<any>>
+  {
+    const response = this.http.get<any>(`${sendUrl}api/user/logout`, {observe: 'response', headers: this.generateHeaders()})
+      .pipe(
+        catchError(this.handleError)
+      );
+    return response;
+  }
+
+
+
+  public getCurrent():Observable<HttpResponse<User>> 
+  {
+    console.log(UserService.token)
+    return this.http.get<User>(`${sendUrl}api/user/get`, {observe: 'response', headers: this.generateHeaders()})
     .pipe( // we are calling a method on the data returned in the observable
       catchError(this.handleError) // passing a callback
     )
   }
-  public logOut(): Observable<any>
+
+  public modifyAccount(modify: ModifyUser): Observable<HttpResponse<User>>
   {
-    return this.http.get(`${sendUrl}api/user/logout`)
+    return this.http.post<User>(`${sendUrl}api/user/modify`, modify, {observe: 'response', headers: this.generateHeaders()})
       .pipe(
         catchError(this.handleError)
-      )
+      );
   }
-  public findByUsername(username: string): Observable<User> {
 
-    return this.http.get<User>(`${sendUrl}/find/${username}`)
+  public getInventory(id: number): Observable<HttpResponse<UserInventory>>
+  {
+    return this.http.get<UserInventory>(`${sendUrl}api/user/inventory/id=${id}`, {observe: 'response', headers: this.generateHeaders()})
       .pipe(
         catchError(this.handleError)
-      )
+      );
   }
+
+
+
   private handleError(httpError: HttpErrorResponse) {
-
-    if (httpError.error instanceof ErrorEvent) {
-      // A client-side or network error occured, handle it accordingly
-      console.log('And error occured: ', httpError.error.message)
-    } else {
-      // the backend returned an unsuccessful response code
-      // the reponse body might have clues for what went wrong
-      console.error(`
-        Backend returned code ${httpError.status}, 
-        body was: ${httpError.error}
-      `)
-    }
     // throwError is an Observable from rxJS
-    return throwError('Something bad happened; fuck all kinds of duck')
+    if('error' in httpError.error)
+      return throwError(httpError.error.error)
+    else if('status' in httpError.error)
+      return throwError(httpError.error.status)
+    else
+      return throwError('Something went very wrong trying to login')
   }
+
+  private setCookie(name: string, value: string, expireDays: number, path: string = '') {
+    let d:Date = new Date();
+    d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
+    let expires:string = `expires=${d.toUTCString()}`;
+    let cpath:string = path ? `; path=${path}` : '';
+    document.cookie = `${name}=${value}; ${expires}${cpath}`;
+  }
+
+  private deleteCookie(name) {
+      this.setCookie(name, '', -1);
+  }
+
+  private getCookie(name: string) {
+      let ca: Array<string> = document.cookie.split(';');
+      let caLen: number = ca.length;
+      let cookieName = `${name}=`;
+      let c: string;
+
+      for (let i: number = 0; i < caLen; i += 1) {
+          c = ca[i].replace(/^\s+/g, '');
+          if (c.indexOf(cookieName) == 0) {
+              return c.substring(cookieName.length, c.length);
+          }
+      }
+      return '';
+  }
+
 }
 
 

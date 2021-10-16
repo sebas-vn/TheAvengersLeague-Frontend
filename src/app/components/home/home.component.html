@@ -1,7 +1,7 @@
 <div class="container">
 
     <div class="title-page">
-        <span>Welcome back ...User...</span>
+        <span>Welcome back {{ user.username }}</span>
     </div>
 
     <mat-grid-list cols="12" rowHeight="700px" gutterSize="2rem">
@@ -9,35 +9,78 @@
 
             <div class="tile-container">
                 <mat-tab-group animationDuration="0ms" dynamicHeight>
-                    <mat-tab label="Available Cards"> 
-                    
-                        <button mat-raised-button color="accent" (click)="getHero()" style="margin-top: 20px; width: 100%;">GET DUMMY HERO</button>
 
-                        <app-hero-card [heroes]="heroes"></app-hero-card>
-                    
+                    <mat-tab label="Main">
+                        <table style="width: 100%; height: 100%;">
+                            <tbody>
+                            <tr>
+                            <td style="width: 33%;">
+                                <div class="btn-div">
+                                    <p class="acc-header" style="text-align: center;">
+                                    <label class="acc-label"><b>Gameplay</b></label>
+                                    </p>
+                                    <button class="btn play-btn" mat-raised-button (click)="startGame()">Play</button>
+                                    <button class="btn logout-btn" mat-raised-button (click)="logout()">Logout</button>
+                                </div>
+                            </td>
+                            <td style="width: 33%;">
+                                <div class="acc-div">
+                                    <p class="acc-header" style="text-align: center;">
+                                    <label class="acc-label"><b>Account</b></label>
+                                    </p>
+                                    <ul>
+                                        <li class="acc-list"> <label>Username: {{ user.username }}</label> </li>
+                                        <li class="acc-list"> <label>Email: {{ user.email }}</label> </li>
+                                        <li class="acc-list"> <label>First Name: {{ user.firstName }}</label> </li>
+                                        <li class="acc-list"> <label>Last Name: {{ user.lastName }}</label> </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td style="width: 33%; text-align: center;">
+                                <div class="modify-div">
+                                    <p class="acc-header" style="text-align: center;">
+                                    <label class="acc-label"><b>Modify Account</b></label>
+                                    </p>
+                                    <mat-form-field class = "form-group center">
+                                        <mat-label>Current Password</mat-label>
+                                        <input matInput [(ngModel)]="modifyUser.currentPassword" name="curPass" class="form-control" id="inputCurPass">
+                                    </mat-form-field>
+                                    <mat-form-field class = "form-group center">
+                                        <mat-label>New Password</mat-label>
+                                        <input matInput [(ngModel)]="modifyUser.newPassword" name="newPass" class="form-control" id="inputNewPass">
+                                    </mat-form-field>
+                                    <mat-form-field class = "form-group center">
+                                        <mat-label>New First Name</mat-label>
+                                        <input matInput [(ngModel)]="modifyUser.firstName" name="newFirst" class="form-control" id="inputFirstName">
+                                    </mat-form-field>
+                                    <mat-form-field class = "form-group center">
+                                        <mat-label>New Last Name</mat-label>
+                                        <input matInput [(ngModel)]="modifyUser.lastName" name="newLast" class="form-control" id="inputLastName">
+                                    </mat-form-field>
+                                    <br>
+                                    <label class="modify-status"><i>{{ modifyStatus }}</i></label>
+                                    <br>
+                                    <br>
+                                    <button class="btn modify-btn" mat-raised-button (click)="modifyAccount()">Save Changes</button>
+                                </div>
+                            </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </mat-tab>
 
-                    <mat-tab label="Decks"> 
-
-                        <button mat-raised-button color="accent" (click)="getHero()" style="margin-top: 20px; width: 100%;">GET DUMMY HERO</button>
-
-                        <app-ingame-card-hero [heroes]="heroes"></app-ingame-card-hero>
-                        
+                    <mat-tab label="Hero Deck">
+                        <app-deck-builder #heroDeck></app-deck-builder>
                     </mat-tab>
+
+                    <mat-tab label="Villain Deck">
+                        <app-deck-builder #villainDeck></app-deck-builder>
+                    </mat-tab>
+
                 </mat-tab-group>
             </div>
 
         </mat-grid-tile>
 
-<!--         <mat-grid-tile [colspan]="3">
-
-            <div class="tile-container-friends">
-                <span class="tile-container-title"> Friends </span>
-                <div class="tile-container-body">
-                    
-                </div>
-            </div>
-
-        </mat-grid-tile> -->
     </mat-grid-list>
 </div>
