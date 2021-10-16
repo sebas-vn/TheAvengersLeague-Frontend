@@ -9,11 +9,14 @@ import { Component, Input } from "@angular/core";
     `,
     styles: [`
     :host, div {
-        display: block;
+        display: inherit;
+        flex-direction: inherit;
+        align-items: inherit;
+        justify-content: inherit;
+        border: inherit;
+        text-align: inherit;
         height: 100%;
         width: 100%;
-        border: 1px solid black;
-        text-align: center;
     }
     `]
 })

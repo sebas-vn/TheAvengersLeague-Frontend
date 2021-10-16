@@ -1,6 +1,13 @@
 import { Coord } from './../coord';
+<<<<<<< HEAD
+import { Component, Input, OnInit } from '@angular/core';
+import { GameService } from 'src/app/services/game.service';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { take } from 'rxjs/operators';
+=======
 import { Component, OnInit } from '@angular/core';
 import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+>>>>>>> 807b664df5f7f3aece2cee816e7a4fb0bc83e71f
 
 @Component({
   selector: 'app-game',
@@ -9,7 +16,19 @@ import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angul
 })
 export class GameboardComponent implements OnInit {
   
+  dummyPosition$ = this.game.dummyPosition$;
   oneSixtyNine: any[] = new Array(169).fill(0).map((_, i) => i);
+  testObject = {};
+  startingPosition;
+  
+
+  constructor(private game: GameService) { }
+
+  ngOnInit(): void {
+    this.oneSixtyNine.forEach((e) => {
+      this.testObject[e] = [1];
+    })  
+  }
   three: any[] = new Array(3).fill(0).map((_, i) => i);
 
   testOnBoard = {};
@@ -19,7 +38,7 @@ export class GameboardComponent implements OnInit {
     return {
       x: i % 13,
       y: Math.floor(i / 13)
-    }
+    };
   }
 
   isBlack({ x, y }: Coord) {
@@ -34,37 +53,38 @@ export class GameboardComponent implements OnInit {
     return true;
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.isPointerOverContainer) {
-      console.log(event.container)
-      // console.log(event.container, event.previousContainer);
-      // console.log(event.container.data, event.previousIndex, event.currentIndex);
-      if (event.previousContainer === event.container) {
-        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      } else {
-        transferArrayItem(
-          event.previousContainer.data,
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex);
-      }
+  handleSquareClick(pos: Coord) {
+    console.log(pos);
+    if (this.game.canMove(pos)) {
+      this.game.moveDummy(pos);
     }
   }
 
-  falsePredicate() {
-    return false;
-  }
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(event.container, event.previousContainer);
+    console.log(event.container.data, event.previousIndex, event.currentIndex);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      if (event.container.data.length < 2) { // validate if dropList container array contains less than 2
+        let idContainer = event.container.id.split('-')[3]; // get the index portion from the id of the container
 
-  constructor() { }
+        if (!this.isBlack(this.xy(parseInt(idContainer)))) { // validate if the position is part of the border 
+          transferArrayItem(
+            event.previousContainer.data,
+            event.container.data,
+            event.previousIndex,
+            event.currentIndex
+          );
 
-  ngOnInit(): void {
-    this.oneSixtyNine.forEach((e) => {
-      this.testOnBoard[e] = ["test"];
-    })  
+        } else {
+          alert("Cannot move outside of the border");
+        }
 
-    this.three.forEach((e) => {
-      this.testInHand[e] = ["card"];
-    })
+      } else {
+        alert("There should only be 2 items");
+      }
+    }
   }
 
 }
