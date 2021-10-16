@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  public user = new User('', '', '', '', '');
+  public user = new User();
   public clientMessage = new ClientMessage('');
   postId: any;
   constructor(private router: Router, private userService: UserService, private http: HttpClient) { }
@@ -25,13 +25,14 @@ export class RegisterComponent implements OnInit {
     this.userService.registerUser(this.user)
       .subscribe( // subscribe to the data returned and do something like generate client message
         data => {
-          this.clientMessage.message = `Successfully registered ${data.firstName}`;
+          const user: User = data.body;
+          this.clientMessage.message = `Successfully registered ${user.firstName}`;
           this.router.navigate(['/home']);
         },
         error => {
           this.clientMessage.message = `Something went wrong. Error: ${error}`; 
           console.log(error)
         }
-      )
+      );
   }
 }

@@ -15,7 +15,7 @@ export class FrontDoorComponent implements OnInit {
     this.userService.getCurrent()
       .subscribe(
         data => {
-          if('email' in data)
+          if('email' in data.body)
             this.router.navigate(['/home']);
         }
       );

@@ -1,9 +1,9 @@
-import { SuperheroService } from './../../services/superhero.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
 import { ModifyUser } from 'src/app/models/modify-user';
+import { UserInventory } from './../../models/user-inventory';
 
 @Component({
   selector: 'app-home',
@@ -12,32 +12,34 @@ import { ModifyUser } from 'src/app/models/modify-user';
 })
 export class HomeComponent implements OnInit {
 
-  heroes = [];
   user: User = new User();
+  inventory: UserInventory;
+  
   modifyUser: ModifyUser = new ModifyUser();
   modifyStatus: string = '';
 
-  constructor(private router: Router, private userService: UserService, private heroService: SuperheroService) { }
+  @ViewChild('heroDeck', {static: false}) heroDeck;
+  @ViewChild('villainDeck', {static: false}) villainDeck;
+
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
     this.userService.getCurrent()
       .subscribe(
         data => {
-          if('email' in data)
-            this.user = data;
-          else
+          if('email' in data.body) {
+            this.user = data.body;
+            this.userService.getInventory(this.user.id)
+              .subscribe(data => {
+                this.inventory = data.body;
+                this.heroDeck.loadInv(true, this.user, this.inventory);
+                this.villainDeck.loadInv(false, this.user, this.inventory);
+              });
+          } else {
             this.router.navigate(['/front-door']);
+          }
         },
         error => this.router.navigate(['/front-door'])
-      );
-  }
-
-  getHero(): void {
-    this.heroService.getSuperHero()
-      .subscribe(data => {
-          this.heroes.push(data);
-        },
-        error => console.error(error)
       );
   }
 
@@ -49,10 +51,9 @@ export class HomeComponent implements OnInit {
     this.userService.logOut()
       .subscribe(
         data => {
-          this.user = data;
+          this.user = new User();
           this.router.navigate(['/front-door']);
-        },
-        error => console.log(`Failed to log out: ${error}`)
+        }
       );
   }
 
@@ -60,7 +61,7 @@ export class HomeComponent implements OnInit {
     if(this.modifyUser.isReady()) {
       this.userService.modifyAccount(this.modifyUser)
       .subscribe(
-        data => this.user = data,
+        data => this.user = data.body,
         error => this.modifyStatus = error
       );
     }

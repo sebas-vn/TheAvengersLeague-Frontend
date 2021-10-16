@@ -16,6 +16,9 @@
                             <tr>
                             <td style="width: 33%;">
                                 <div class="btn-div">
+                                    <p class="acc-header" style="text-align: center;">
+                                    <label class="acc-label"><b>Gameplay</b></label>
+                                    </p>
                                     <button class="btn play-btn" mat-raised-button (click)="startGame()">Play</button>
                                     <button class="btn logout-btn" mat-raised-button (click)="logout()">Logout</button>
                                 </div>
@@ -67,16 +70,11 @@
                     </mat-tab>
 
                     <mat-tab label="Hero Deck">
-                        
+                        <app-deck-builder #heroDeck></app-deck-builder>
                     </mat-tab>
 
                     <mat-tab label="Villain Deck">
-                        
-                    </mat-tab>
-
-                    <mat-tab label="Available Cards"> 
-                        <button class="btn" mat-raised-button color="accent" (click)="getHero()">GET DUMMY HERO</button>
-                        <app-hero-card [heroes]="heroes"></app-hero-card>
+                        <app-deck-builder #villainDeck></app-deck-builder>
                     </mat-tab>
 
                 </mat-tab-group>
@@ -84,15 +82,5 @@
 
         </mat-grid-tile>
 
-<!--         <mat-grid-tile [colspan]="3">
-
-            <div class="tile-container-friends">
-                <span class="tile-container-title"> Friends </span>
-                <div class="tile-container-body">
-                    
-                </div>
-            </div>
-
-        </mat-grid-tile> -->
     </mat-grid-list>
 </div>
