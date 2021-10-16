@@ -11,7 +11,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
 import { GameboardComponent } from './components/gameboard/gameboard.component';
 import { DummyunitComponent } from './components/dummyunit/dummyunit.component';
-import { SquareComponent } from './components/square.component';
+import { SquareComponent } from './components/gameboard/square.component';
 import { IngameCardHeroComponent } from './components/ingame-card-hero/ingame-card-hero.component';
 import { UpdateComponent } from './components/update/update.component';
 import { HeroCardComponent } from './components/hero-card/hero-card.component';
@@ -30,6 +30,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { GameboardSquareComponent } from './components/gameboard-square/gameboard-square.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     IngameCardHeroComponent,
     GameboardComponent,
     DummyunitComponent,
-    SquareComponent
+    SquareComponent,
+    GameboardSquareComponent
   ],
   imports: [
     BrowserModule,

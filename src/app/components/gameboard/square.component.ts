@@ -8,15 +8,12 @@ import { Component, Input } from "@angular/core";
     </div>
     `,
     styles: [`
-    :host, div {
-        display: inherit;
-        flex-direction: inherit;
-        align-items: inherit;
-        justify-content: inherit;
-        border: inherit;
-        text-align: inherit;
+    div {
+        display: block;
         height: 100%;
         width: 100%;
+        border: 1px solid black;
+        text-align: center;
     }
     `]
 })

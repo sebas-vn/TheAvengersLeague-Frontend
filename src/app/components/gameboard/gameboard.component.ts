@@ -1,13 +1,6 @@
 import { Coord } from './../coord';
-<<<<<<< HEAD
 import { Component, Input, OnInit } from '@angular/core';
-import { GameService } from 'src/app/services/game.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { take } from 'rxjs/operators';
-=======
-import { Component, OnInit } from '@angular/core';
-import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
->>>>>>> 807b664df5f7f3aece2cee816e7a4fb0bc83e71f
 
 @Component({
   selector: 'app-game',
@@ -16,20 +9,24 @@ import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angul
 })
 export class GameboardComponent implements OnInit {
   
-  dummyPosition$ = this.game.dummyPosition$;
   oneSixtyNine: any[] = new Array(169).fill(0).map((_, i) => i);
+  three: any[] = new Array(3).fill(0).map((_, i) => i);
   testObject = {};
   startingPosition;
   
 
-  constructor(private game: GameService) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.oneSixtyNine.forEach((e) => {
       this.testObject[e] = [1];
-    })  
+    });
+    
+    this.three.forEach((e) => {
+      this.testInHand[e] = ["card"];
+    }) 
   }
-  three: any[] = new Array(3).fill(0).map((_, i) => i);
+  
 
   testOnBoard = {};
   testInHand = {};
@@ -53,13 +50,6 @@ export class GameboardComponent implements OnInit {
     return true;
   }
 
-  handleSquareClick(pos: Coord) {
-    console.log(pos);
-    if (this.game.canMove(pos)) {
-      this.game.moveDummy(pos);
-    }
-  }
-
   drop(event: CdkDragDrop<string[]>) {
     console.log(event.container, event.previousContainer);
     console.log(event.container.data, event.previousIndex, event.currentIndex);
@@ -69,7 +59,7 @@ export class GameboardComponent implements OnInit {
       if (event.container.data.length < 2) { // validate if dropList container array contains less than 2
         let idContainer = event.container.id.split('-')[3]; // get the index portion from the id of the container
 
-        if (!this.isBlack(this.xy(parseInt(idContainer)))) { // validate if the position is part of the border 
+        if (!this.isBlack(this.xy(parseInt(idContainer) - 3))) { // validate if the position is part of the border 
           transferArrayItem(
             event.previousContainer.data,
             event.container.data,
@@ -85,6 +75,10 @@ export class GameboardComponent implements OnInit {
         alert("There should only be 2 items");
       }
     }
+  }
+
+  falsePredicate() {
+    return false;
   }
 
 }
