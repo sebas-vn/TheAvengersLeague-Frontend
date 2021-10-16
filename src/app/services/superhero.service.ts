@@ -15,12 +15,20 @@ export class SuperheroService {
   constructor(private http: HttpClient) { }
 
   httpOption = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
+    withCredentials: false,
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
   }
 
   public getSuperHero(): Observable<any> {
     let rand = Math.floor(Math.random() * 255);
     return this.http.get<any>(`${url}/${rand}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  public getSuperHeroById(id: number): Observable<any> {
+    return this.http.get<any>(`${url}/${id}`)
       .pipe(catchError(this.handleError));
   }
 
