@@ -25,6 +25,7 @@
                 <input matInput [(ngModel)] = "user.username" type = "text" name = "username" class = "form-control" [formControl] = "username" required>
                 <mat-error *ngIf = "username.hasError('required')">{{errorMessages.nothing}}</mat-error>
                 <mat-error *ngIf = "username.hasError('minlength')">{{errorMessages.short}}</mat-error>
+                <mat-error *ngIf = "taken">{{errorMessages.taken}}</mat-error>
             </mat-form-field>
             <br>
             <mat-form-field class = "form-group center">
@@ -36,7 +37,7 @@
             <br>
             <mat-form-field class = "form-group center">
                 <mat-label>Password</mat-label>
-                <input matInput [(ngModel)] = "user.password" type = "text" name = "password" class = "form-control" [formControl] = "pass" required>
+                <input matInput [(ngModel)] = "user.password" type = "password" name = "password" class = "form-control" [formControl] = "pass" required>
                 <mat-error *ngIf = "pass.hasError('minlength')">{{errorMessages.short}}</mat-error>
                 <mat-error *ngIf = "pass.hasError('required')">{{errorMessages.nothing}}</mat-error>
             </mat-form-field>

@@ -19,10 +19,12 @@ export class RegisterComponent implements OnInit {
   username = new FormControl('', [Validators.required, Validators.minLength(3)])
   first = new FormControl('', [Validators.required])
   last = new FormControl('', [Validators.required])
+  taken = false;
   errorMessages: {[key : string]: string} = {
     nothing: "You must enter a value",
     short: "Too small",
-    invEmail: "Invalid email"
+    invEmail: "Invalid email",
+    taken: "Username is already taken"
   }
   constructor(private userService: UserService, private http: HttpClient) { }
 
@@ -34,8 +36,12 @@ export class RegisterComponent implements OnInit {
   {
     this.userService.registerUser(this.user)
       .subscribe( // subscribe to the data returned and do something like generate client message
-        data => {this.user = data; this.clientMessage.message = `Successfully registered ${data.firstName}`},   // console.log(`successfully added ${data.firstName}`)
-        error => {this.clientMessage.message = `Something went wrong. Error: ${error}`} // console.error(`We got an error: ${error}` 
+        data => {this.user = data; this.clientMessage.message = `Successfully registered ${data.firstName}`; console.log(data);  this.registerStatus(JSON.stringify(data))},   // console.log(`successfully added ${data.firstName}`)
+        error => {this.clientMessage.message = `Something went wrong. Error: ${error}`; this.registerStatus(error)} // console.error(`We got an error: ${error}` 
       )
+  }
+  private registerStatus(error: string): void
+  {        
+    this.taken = true;
   }
 }
