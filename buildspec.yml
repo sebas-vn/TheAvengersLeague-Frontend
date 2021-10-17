@@ -15,11 +15,9 @@ phases:
         commands:
             - echo Build started on `date`
             - ng build --${BUILD_ENV}
-    post_build:
-         commands:
-            - aws s3 cp dist s3://theavengersleague-frontend --recursive --acl public-read
-            - echo Build completed on `date`
+
 artifacts:
     files:
         - '**/*'
     base-directory: 'dist*'
+    discard-paths:yes
