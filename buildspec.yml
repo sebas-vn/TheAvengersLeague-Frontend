@@ -1,10 +1,10 @@
 version: 0.2
 env:
     variables:
-        CACHE_CONTROL: "86400"
-        S3_BUCKET: {theavengersleague-frontend}
-        BUILD_FOLDER: {dist}
-        BUILD_ENV: "prod"
+        CACHE_CONTROL: 86400
+        S3_BUCKET: theavengersleague-frontend
+        BUILD_FOLDER: dist/app
+        BUILD_ENV: prod
 phases:
     install:
         commands:
@@ -17,10 +17,9 @@ phases:
             - ng build --${BUILD_ENV}
     post_build:
          commands:
-            - aws s3 cp ${BUILD_FOLDER} s3://${S3_BUCKET} --recursive --acl public-read --cache-control "max-age=${CACHE_CONTROL}"
+            - aws s3 cp dist s3://theavengersleague-frontend --recursive --acl public-read
             - echo Build completed on `date`
 artifacts:
     files:
         - '**/*'
     base-directory: 'dist*'
-    discard-paths: yes
