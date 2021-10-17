@@ -15,7 +15,7 @@ phases:
         commands:
             - echo Build started on `date`
             - ng build --${BUILD_ENV}
-            - aws s3 sync dist/app s3://theavengersleague-frontend
+            - aws s3 sync dist/index.html s3://theavengersleague-frontend
 
 artifacts:
     files:
