@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { GameboardComponent } from './../gameboard/gameboard.component';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { GameBoard, GameUpdate } from 'src/app/models/gameboard';
 import { GameService } from 'src/app/services/game.service';
 import { interval, Subscription } from 'rxjs';
@@ -18,6 +19,8 @@ export class GamePlayComponent implements OnInit, OnDestroy {
   gameBoard: GameBoard;
   response: GameUpdate;
   user: User;
+
+  @ViewChild('gameboard', {static: false}) gameboard: GameboardComponent;
 
   private subscription: Subscription;
 
