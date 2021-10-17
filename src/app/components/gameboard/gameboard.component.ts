@@ -1,6 +1,8 @@
+import { TestgameService } from './../../services/testgame.service';
 import { Coord } from './../coord';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Gameboard } from 'src/app/interfaces/gameboard';
 
 @Component({
   selector: 'app-game',
@@ -10,26 +12,26 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 export class GameboardComponent implements OnInit {
   
   oneSixtyNine: any[] = new Array(169).fill(0).map((_, i) => i);
-  three: any[] = new Array(3).fill(0).map((_, i) => i);
   testObject = {};
   startingPosition;
+
+  gameBoard: Gameboard;
   
 
-  constructor() { }
+  constructor(private tgameService: TestgameService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.oneSixtyNine.forEach((e) => {
-      this.testObject[e] = [1];
+      this.testObject[e] = [];
     });
-    
-    this.three.forEach((e) => {
-      this.testInHand[e] = ["card"];
-    }) 
-  }
-  
 
-  testOnBoard = {};
-  testInHand = {};
+    // getting the current state of the game
+    this.tgameService.getGamePlay()
+    .subscribe(data => {
+      this.gameBoard = data;
+      this.setItemInTable(this.gameBoard.gameBoard); // comparing positions in each table
+    });
+  }
 
   xy(i): Coord {
     return {
@@ -50,22 +52,43 @@ export class GameboardComponent implements OnInit {
     return true;
   }
 
+  setItemInTable(gameBoard) {
+
+    this.oneSixtyNine.forEach((e) => {
+      let coords = this.xy(e);
+      gameBoard.forEach(el => {
+        if (el.x === coords.x && el.y === coords.y) {
+          this.testObject[e].push(el);
+        }
+      });
+    })
+
+  }
+
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event.container, event.previousContainer);
-    console.log(event.container.data, event.previousIndex, event.currentIndex);
+    console.log(event.previousContainer.data);
+    console.log(event.container.data);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       if (event.container.data.length < 2) { // validate if dropList container array contains less than 2
+        console.log('less than 2')
         let idContainer = event.container.id.split('-')[3]; // get the index portion from the id of the container
+        let newCoord = this.xy(parseInt(idContainer) - 3);
+        if (!this.isBlack(newCoord)) { // validate if the position is part of the border 
 
-        if (!this.isBlack(this.xy(parseInt(idContainer) - 3))) { // validate if the position is part of the border 
           transferArrayItem(
             event.previousContainer.data,
             event.container.data,
             event.previousIndex,
             event.currentIndex
           );
+
+          // Update positions of items in container
+          event.container.data.forEach(e => {
+            e['x'] = newCoord.x;
+            e['y'] = newCoord.y;
+          });
 
         } else {
           alert("Cannot move outside of the border");
