@@ -1,13 +1,12 @@
-<mat-toolbar class = "nav-center">
-    <a routerLink = "home">The Avengers League</a>
+<mat-toolbar class = "nav-center {{align}}">
+    <a routerLink = "home" class = "{{align}} link home">The Avengers League</a>
     <span class="spacer"></span>
-    <a routerLink = "hero-card">Cards</a>
+    <a routerLink = "hero-card" class = "{{align}}">Cards</a>
     <span class = "spacer"></span>
-    <a routerLink = "update">
+    <a routerLink = "update" class = "{{align}}">
         <mat-icon aria-hidden="false" aria-label="Example home icon">account_circle</mat-icon>
     </a>
+    <button type="button" (click) = "switchAlignment()">change</button>
     <span class = "spacer"></span>
     <button type ="button" (click) = "logOut()">logout</button>
-    <button mat-raised-button [routerLink]="['/home']" routerLinkActive="router-link-active" >Enter Home</button>
-    <mat-icon aria-hidden="false" aria-label="Example home icon">account_circle</mat-icon>
 </mat-toolbar>

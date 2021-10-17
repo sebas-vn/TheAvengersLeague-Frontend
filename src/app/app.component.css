@@ -11,3 +11,10 @@
     padding: 10px;
     text-align: center
 }
+.hero{
+    background-color: blue;
+    font-family: sans-serif;
+}
+.villain{
+    background-color: crimson;
+}

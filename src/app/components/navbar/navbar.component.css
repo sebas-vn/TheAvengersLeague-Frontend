@@ -18,7 +18,31 @@
     justify-content: center;
     text-align: center;
     vertical-align: middle;
+    z-index: 1;
 }
 button {
     margin-right: 20px;
+}
+.hero{
+    background-color: blue;
+    font-family: fantasy;
+    white-space: nowrap;
+    color: black;
+    outline: 0;
+    border: none;
+    text-decoration: none;
+}
+.link:hover{background-color: grey;}
+.villain{
+    background-color: crimson;
+    font-family: fantasy;
+    white-space: nowrap;
+    color: black;
+    outline: 0;
+    border: none;
+    text-decoration: none;
+    width: auto
+}
+.home{
+    font-size: 34;
 }
