@@ -1,28 +1,56 @@
 <div class="hero-container" *ngIf="heroes.length > 0">
-  <mat-card *ngFor="let hero of heroes" class="hero-card">
-      <mat-card-header>
-        <mat-card-title> {{ hero.name }} </mat-card-title>
-        <mat-card-subtitle class="line-clamp"> {{ hero.work.occupation }} </mat-card-subtitle>
-      </mat-card-header>
-      <img mat-card-image class="hero-image" [src]="hero.image.url" (error)="updateUrl($event)" alt="Hero Image">
-      <!-- Maybe add a mat-card-content -->
-      <mat-card-actions>
-        <button mat-raised-button color="accent" 
-        (click)="currentViewStats.includes(hero.id) ? disableStatView(hero.id) : enableStatView(hero.id)" >
-          {{ (currentViewStats.includes(hero.id)) ? 'Close Stats' : 'View Stats'}}
-        </button>
-      </mat-card-actions>
-      <!-- mat-card-actions -->
 
-      <div class="stats" *ngIf="currentViewStats.includes(hero.id)">
-        <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
-          <mat-chip *ngFor="let stat of hero.powerstats | keyvalue" [selectable]="false" color="accent">
-            <span class="stat_name">{{ stat.key | titlecase}}</span> 
-            <div class="stat_value_box">
-              <span class="stat_value">{{ (stat.value == 'null') ? n/a : stat.value }}</span>
-            </div>
-          </mat-chip>
-        </mat-chip-list>
-      </div>
+  <style>
+    .circle {
+      height: 22px;
+      width: 22px;
+      background-color: #555;
+      border-radius: 50%;
+      border-style: solid;
+      border-color: black;
+      font-size: 18px;
+      color: white;
+      text-align: center;
+      margin: 1px;
+  }
+  </style>
+
+  <mat-card *ngFor="let hero of heroes" class="hero-card" [style.background-color]="getBackground()">
+  <div class="card-inner" [style.background-color]="getForeground()">
+    <table style="width: 100%;">
+      <tbody>
+      <tr>
+      <td style="width: 24px;"> <p class="circle"> {{ hero.powerCost }} </p> </td>
+      <td> <label  class="title" style="width: 100px;"><b>{{ hero.name }}</b></label>  </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <img mat-card-image class="hero-image" [src]="hero.image" (error)="updateUrl($event)" alt="Hero Image">
+
+    <div style="text-align: left; margin-bottom: 4px; margin-left: 2px;">
+    <label class="stats"><b>{{ hero.ability }}:</b> {{ hero.abilityDesc }}</label>
+    </div>
+
+    <table style="width: 100%;">
+      <tbody>
+      <tr>
+      <td style="width: 45%;"> <label class="stats">Power: {{ hero.power }}</label> </td>
+      <td style="width: 55%;"> <label class="stats">Strength: {{ hero.strength }}</label> </td>
+      </tr>
+      <tr>
+      <td style="width: 45%;"> <label class="stats">Combat: {{ hero.combat }}</label> </td>
+      <td style="width: 55%;"> <label class="stats">Durability: {{ hero.durability }}</label> </td>
+      </tr>
+      <tr>
+      <td style="width: 45%;"> <label class="stats">Speed: {{ hero.speed }}</label> </td>
+      <td style="width: 55%;"> <label class="stats">Intelligence: {{ hero.intelligence }}</label> </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <button class="btn add-btn" mat-raised-button (click)="addCard(hero.id)" [style.background-color]="getForeground()">Add Card</button>
   </mat-card>
+
 </div>

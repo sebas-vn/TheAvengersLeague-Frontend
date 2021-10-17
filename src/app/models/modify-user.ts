@@ -17,3 +17,15 @@ export class ModifyUser {
     }
 
 }
+
+export class ModifyDecks {
+
+    heroDeck: number[];
+    villianDeck: number[];
+
+    constructor(heroDeck: number[] = [], villianDeck: number[] = []) {
+        this.heroDeck = heroDeck;
+        this.villianDeck = villianDeck;
+    }
+
+}
