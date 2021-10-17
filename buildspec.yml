@@ -4,7 +4,7 @@ env:
         CACHE_CONTROL: 86400
         S3_BUCKET: theavengersleague-frontend
         BUILD_FOLDER: dist/app
-        BUILD_ENV: "prod"
+        BUILD_ENV: prod
 phases:
     install:
         commands:
