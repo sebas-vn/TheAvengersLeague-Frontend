@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
 import { ModifyUser } from 'src/app/models/modify-user';
 import { UserInventory } from './../../models/user-inventory';
+import { UserDecks } from 'src/app/models/user-decks';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ import { UserInventory } from './../../models/user-inventory';
 export class HomeComponent implements OnInit {
 
   user: User = new User();
+  userDecks: UserDecks;
   inventory: UserInventory;
   
   modifyUser: ModifyUser = new ModifyUser();
@@ -32,8 +34,13 @@ export class HomeComponent implements OnInit {
             this.userService.getInventory(this.user.id)
               .subscribe(data => {
                 this.inventory = data.body;
-                this.heroDeck.loadInv(true, this.user, this.inventory);
-                this.villainDeck.loadInv(false, this.user, this.inventory);
+                this.userService.getDecks(this.user.id).subscribe(
+                  data => {
+                    this.userDecks = data.body;
+                    this.heroDeck.loadInv(true, this.user, this.inventory, this.userDecks.heroDeck);
+                    this.villainDeck.loadInv(false, this.user, this.inventory, this.userDecks.villianDeck);
+                  }
+                )
               });
           } else {
             this.router.navigate(['/front-door']);

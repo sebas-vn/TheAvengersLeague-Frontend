@@ -1,0 +1,21 @@
+
+
+table td, table td * {
+    vertical-align: top;
+    text-align: center;
+}
+
+.save-btn {
+    background-color: #00BB00;
+    color: black;
+    margin-top: 20px;
+    width: 90%;
+}
+
+.card-btn {
+    background-color: #DDDDDD;
+    color: black;
+    margin-top: 10px;
+    width: 80%;
+    vertical-align: top;
+}

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from "@angul
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { sendUrl } from 'src/environments/environment';
-import { ModifyUser } from '../models/modify-user';
+import { ModifyUser, ModifyDecks } from '../models/modify-user';
 import { UserInventory } from '../models/user-inventory';
 import { LoginMessage } from '../models/login-message';
 import { UserDecks } from '../models/user-decks';
@@ -71,6 +71,14 @@ export class UserService {
   public modifyAccount(modify: ModifyUser): Observable<HttpResponse<User>>
   {
     return this.http.post<User>(`${sendUrl}api/user/modify`, modify, {observe: 'response', headers: this.generateHeaders()})
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  public modifyDecks(modify: ModifyDecks): Observable<HttpResponse<User>>
+  {
+    return this.http.post<User>(`${sendUrl}api/user/modify/decks`, modify, {observe: 'response', headers: this.generateHeaders()})
       .pipe(
         catchError(this.handleError)
       );

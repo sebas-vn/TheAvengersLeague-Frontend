@@ -1,2 +1,20 @@
-
-<app-hero-card [heroes]="cards" [hero]="hero"></app-hero-card>
+<table style="border-collapse: collapse; width: 100%;">
+    <tbody>
+    <tr>
+    <td style="width: 350px;"> 
+        <div>
+            <button class="btn save-btn" mat-raised-button (click)="saveDeck()">Save Deck</button>
+            <div *ngIf="deck.length > 0">
+                <span *ngFor="let card of deck" style="vertical-align: top;">
+                    <button class="btn card-btn" mat-raised-button (click)="removeCard(card)">{{ getCard(card).name }}</button>
+                    <br>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td> 
+        <app-hero-card [heroes]="cards" [hero]="hero" [parent]="this"></app-hero-card> 
+    </td>
+    </tr>
+    </tbody>
+</table>

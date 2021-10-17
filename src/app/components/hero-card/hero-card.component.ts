@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DeckBuilderComponent } from '../deck-builder/deck-builder.component';
 
 @Component({
   selector: 'app-hero-card',
@@ -9,6 +10,7 @@ export class HeroCardComponent implements OnInit {
 
   @Input() heroes = [];
   @Input() hero: boolean = true;
+  @Input() parent: DeckBuilderComponent;
 
   getBackground(): string {
     if(this.hero)
@@ -29,6 +31,10 @@ export class HeroCardComponent implements OnInit {
 
   updateUrl(event) {
     event.target.attributes.src.value = "../../../assets/generic-hero.jpg"
+  }
+
+  addCard(id: number): void {
+    this.parent.addCard(id);
   }
 
 }
