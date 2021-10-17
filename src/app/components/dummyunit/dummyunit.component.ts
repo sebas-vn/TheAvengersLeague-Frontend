@@ -14,30 +14,16 @@ export class DummyunitComponent {
   user: User = new User();
   inventory: UserInventory;
 
-  @Input('name') itemName;
+  @Input('card') card;
   @Input('squareArray') squareArr;
   @Input() index;
   
-  constructor(private userService:UserService, private router: Router) { }
+  constructor() { }
 
 
   ngOnInit(): void {
 
-    this.userService.getCurrent()
-    .subscribe(
-      data => {
-        if('email' in data.body) {
-          this.user = data.body;
-          this.userService.getInventory(this.user.id)
-            .subscribe(data => {
-              this.inventory = data.body;
-            });
-        } else {
-          this.router.navigate(['/front-door']);
-        }
-      },
-      error => this.router.navigate(['/front-door'])
-    );
+    //console.log(this.card, this.squareArr, this.index);
   }
 
   
