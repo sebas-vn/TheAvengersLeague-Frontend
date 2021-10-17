@@ -1,4 +1,25 @@
 <div cdkDropListGroup>
+    <table style="border-collapse: collapse; width: 100%;">
+    <tbody>
+    <tr>
+
+    <td style="width: 40%;">
+    <div class="hand">
+        <ng-container *ngFor="let i of three">
+            <app-square
+            cdkDropList
+            id="hand"
+            [cdkDropListData]="testInHand[i]"
+            [cdkDropListEnterPredicate]="falsePredicate"
+            (cdkDropListDropped)="drop($event)">
+                <div *ngFor="let item of testInHand[i]" cdkDrag>{{item}}</div>
+            </app-square>
+            <app-hero-card [hero]="card" [isHero]="hero" [parent]="this"></app-hero-card> 
+        </ng-container>
+    </div>
+    </td>
+
+    <td style="width: 60%;">
     <div class="board">
         <ng-container>
             <ng-container *ngFor="let i of oneSixtyNine">
@@ -20,19 +41,11 @@
             </ng-container>
         </ng-container>
     </div>
-    
-    <div class="hand">
-        <ng-container *ngFor="let i of three">
-            <app-square
-            cdkDropList
-            id="hand"
-            [cdkDropListData]="testInHand[i]"
-            [cdkDropListEnterPredicate]="falsePredicate"
-            (cdkDropListDropped)="drop($event)">
-                <div *ngFor="let item of testInHand[i]" cdkDrag>{{item}}</div>
-            </app-square>
-        </ng-container>
-    </div>
+    </td>
+
+    </tr>
+    </tbody>
+    </table>
 </div>
 
     
