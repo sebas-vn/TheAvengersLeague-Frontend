@@ -14,6 +14,8 @@ export class DeckBuilderComponent implements OnInit {
 
   cards: Card[] = [];
   deck: number[] = [];
+  saveStatus: string = '';
+  saveStatusColor: string = 'green';
 
   @Input() hero: boolean;
   user: User;
@@ -83,10 +85,19 @@ export class DeckBuilderComponent implements OnInit {
       else
         modifyDeck.villianDeck = this.deck;
 
-      console.log(modifyDeck)
-
       this.userService.modifyDecks(modifyDeck)
-        .subscribe(data => console.log(data));
+        .subscribe(data => {
+          if('email' in data.body) {
+            this.saveStatus = 'Successfully saved deck';
+            this.saveStatusColor = 'black';
+          } else {
+            this.saveStatus = 'Failed to save deck'
+            this.saveStatusColor = 'red';
+          }
+        });
+    } else {
+      this.saveStatus = 'Deck must have at least 5 cards';
+      this.saveStatusColor = 'red';
     }
   }
 
@@ -96,7 +107,6 @@ export class DeckBuilderComponent implements OnInit {
   }
 
   addCard(id: number): void {
-    console.log(this.deck)
     if(this.deck.length > 20)
       return;
     if(id > 0) {

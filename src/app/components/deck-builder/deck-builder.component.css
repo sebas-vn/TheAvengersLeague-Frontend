@@ -9,6 +9,7 @@ table td, table td * {
     background-color: #00BB00;
     color: black;
     margin-top: 20px;
+    margin-bottom: 4px;
     width: 90%;
 }
 
