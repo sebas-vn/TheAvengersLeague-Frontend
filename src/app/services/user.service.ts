@@ -4,9 +4,10 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from "@angul
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { sendUrl } from 'src/environments/environment';
-import { ModifyUser } from '../models/modify-user';
+import { ModifyUser, ModifyDecks } from '../models/modify-user';
 import { UserInventory } from '../models/user-inventory';
 import { LoginMessage } from '../models/login-message';
+import { UserDecks } from '../models/user-decks';
 
 @Injectable({
   providedIn: 'root'
@@ -75,9 +76,25 @@ export class UserService {
       );
   }
 
+  public modifyDecks(modify: ModifyDecks): Observable<HttpResponse<User>>
+  {
+    return this.http.post<User>(`${sendUrl}api/user/modify/decks`, modify, {observe: 'response', headers: this.generateHeaders()})
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   public getInventory(id: number): Observable<HttpResponse<UserInventory>>
   {
     return this.http.get<UserInventory>(`${sendUrl}api/user/inventory/id=${id}`, {observe: 'response', headers: this.generateHeaders()})
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  public getDecks(id: number): Observable<HttpResponse<UserDecks>>
+  {
+    return this.http.get<UserDecks>(`${sendUrl}api/user/decks/id=${id}`, {observe: 'response', headers: this.generateHeaders()})
       .pipe(
         catchError(this.handleError)
       );
