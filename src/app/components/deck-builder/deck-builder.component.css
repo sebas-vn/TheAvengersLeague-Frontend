@@ -20,3 +20,8 @@ table td, table td * {
     width: 80%;
     vertical-align: top;
 }
+
+.inv {
+    display: flex;
+    flex-wrap: wrap;
+}
