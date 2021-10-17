@@ -14,6 +14,8 @@ import { User } from 'src/app/models/user';
 })
 export class GamePlayComponent implements OnInit, OnDestroy {
 
+  //test
+
   inQueue: boolean;
   submittedTurn: boolean;
   gameBoard: GameBoard;
