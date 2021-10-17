@@ -57,11 +57,15 @@ export class GamePlayComponent implements OnInit, OnDestroy {
   }
 
   playCard(index: number): void {
-    this.response.hand[index] = 0;
+    if(this.gameBoard.hand[index].powerCost <= this.gameBoard.power) {
+      this.response.hand[index] = 0;
+      this.response.power -= this.gameBoard.hand[index].powerCost;
+    }
   }
 
   unplayCard(index: number): void {
     this.response.hand[index] = this.gameBoard.hand[index].id;
+    this.response.power += this.gameBoard.hand[index].powerCost;
   }
 
   private handleStatus(status: string): void {
