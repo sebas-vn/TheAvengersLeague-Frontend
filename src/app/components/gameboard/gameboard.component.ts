@@ -62,46 +62,47 @@ export class GameboardComponent implements OnInit {
   }
 
   // Check the first three positions if they are empty to insert into hand
-  insertItemFromHand(card: any): boolean {
-    if (this.testObject[148].length == 0) {
-      this.testObject[148].push(card);
-      return true;
-
-    } else if (this.testObject[149].length == 0) {
+  insertItemFromHand(card: any): Coord {
+    if (this.testObject[149].length == 0) {
       this.testObject[149].push(card);
-      return true;
+      return this.xy(149);
+
+    } else if (this.testObject[148].length == 0) {
+      this.testObject[148].push(card);
+      return this.xy(148);
       
     } else if (this.testObject[150].length == 0) {
       this.testObject[150].push(card);
-      return true;
+      return this.xy(150);
 
     } else {
       alert('Move one card from initial position to insert new from hand');
-      return false;
+      return null
     }
   }
 
-  returnItemToHand(card: any): boolean {
+  // Evaluate the first positions from the gameboard to return the matching card
+  returnItemToHand(card: any): Coord {
     if (this.testObject[148].length == 1) {
       if (card.id === this.testObject[148][0].id) {
         this.testObject[148].splice(0, 1);
-        return true;
+        return this.xy(148);
       }
     } else if (this.testObject[149].length == 1) {
       if (card.id === this.testObject[149][0].id) {
         this.testObject[149].splice(0, 1);
-        return true;
+        return this.xy(149);
       }
       
     } else if (this.testObject[150].length == 1) {
       if (card.id === this.testObject[150][0].id) {
         this.testObject[149].splice(0, 1);
-        return true;
+        return this.xy(150);
       }
 
     } else {
       alert('Could not return from hand');
-      return false;
+      return null;
     }
   }
 
