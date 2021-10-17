@@ -67,10 +67,11 @@ export class GamePlayComponent implements OnInit, OnDestroy {
   }
 
   submitTurn(): void {
+    this.response.power = 100;
     this.submittedTurn = true;
     this.gameService.updateGame(this.response).subscribe(
-      data => this.handleStatus(data.body),
-      error => { this.handleStatus(error); this.submittedTurn = false; }
+      data => { console.log(data); this.handleStatus(data.body) },
+      error => { console.log(error); this.handleStatus(error); this.submittedTurn = false; }
     );
   }
 
@@ -82,7 +83,7 @@ export class GamePlayComponent implements OnInit, OnDestroy {
   }
 
   playCard(index: number): void {
-    if(this.gameBoard.hand[index].powerCost <= this.gameBoard.power) {
+    if(this.gameBoard.hand[index].powerCost <= this.gameBoard.power + 100) {
       const coord: Coord = this.gameBoardChild.insertItemFromHand(this.gameBoard.hand[index]);
       if(coord != null) {
         this.response.hand[index] = 0;

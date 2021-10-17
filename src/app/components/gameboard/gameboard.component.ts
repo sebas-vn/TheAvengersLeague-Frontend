@@ -3,6 +3,7 @@ import { Coord } from './../coord';
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Gameboard } from 'src/app/interfaces/gameboard';
+import { Card } from 'src/app/models/user-inventory';
 
 @Component({
   selector: 'app-game',
@@ -62,48 +63,39 @@ export class GameboardComponent implements OnInit {
   }
 
   // Check the first three positions if they are empty to insert into hand
-  insertItemFromHand(card: any): Coord {
-    if (this.testObject[149].length == 0) {
-      this.testObject[149].push(card);
-      return this.xy(149);
+  insertItemFromHand(card: Card): Coord {
+    let search: number[] = [];
+    if(this.isHero)
+      search = [149,148,150];
+    else
+      search = [17,16,18];
 
-    } else if (this.testObject[148].length == 0) {
-      this.testObject[148].push(card);
-      return this.xy(148);
-      
-    } else if (this.testObject[150].length == 0) {
-      this.testObject[150].push(card);
-      return this.xy(150);
-
-    } else {
-      alert('Move one card from initial position to insert new from hand');
-      return null
+    for(let i of search) {
+      if(this.testObject[i].length == 0) {
+        this.testObject[i].push(card);
+        return this.xy(i);
+      }
     }
+    return null;
   }
 
   // Evaluate the first positions from the gameboard to return the matching card
-  returnItemToHand(card: any): Coord {
-    if (this.testObject[148].length == 1) {
-      if (card.id === this.testObject[148][0].id) {
-        this.testObject[148].splice(0, 1);
-        return this.xy(148);
-      }
-    } else if (this.testObject[149].length == 1) {
-      if (card.id === this.testObject[149][0].id) {
-        this.testObject[149].splice(0, 1);
-        return this.xy(149);
-      }
-      
-    } else if (this.testObject[150].length == 1) {
-      if (card.id === this.testObject[150][0].id) {
-        this.testObject[149].splice(0, 1);
-        return this.xy(150);
-      }
+  returnItemToHand(card: Card): Coord {
+    let search: number[] = [];
+    if(this.isHero)
+      search = [149,148,150];
+    else
+      search = [17,16,18];
 
-    } else {
-      alert('Could not return from hand');
-      return null;
+    for(let i of search) {
+      for(let j = 0; j < this.testObject[i].length; j++) {
+        if (card.id === this.testObject[i][j].id) {
+          this.testObject[i].splice(j, 1);
+          return this.xy(i);
+        }
+      }
     }
+    return null;
   }
 
   checkMovementDistance(oldCoords: any, newCoords: any, card: any): Promise<any>{
