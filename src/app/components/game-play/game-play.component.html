@@ -2,32 +2,47 @@
 <div class="queue" *ngIf="inQueue">
     <div class="queue-label">
         <label>Waiting for players...</label>
+        <br>
+        <br>
+        <br>
+        <button class="btn leave-btn" mat-raised-button (click)="leaveGame()">Leave Queue</button>
     </div>
 </div>
-<div class="gameboard" *ngIf="!inQueue && gameBoard != null">
+<div class="gameboard" *ngIf="!inQueue && gameBoard != null && gameBoard.state == 0">
     <div class = "sideboard">
         <div class="text-div">
             <h1>Current Turn: {{ gameBoard.turn }}</h1>
             <h1>Available Power: {{ response.power }}</h1>
+            <button class="btn submit-btn" *ngIf="!submittedTurn" mat-raised-button (click)="submitTurn()">Submit Turn</button>
+            <button class="btn concede-btn" mat-raised-button (click)="leaveGame()">Concede Game</button>
         </div>
         <div class="hand">
             <div>
                 <app-hero-card [hero]="gameBoard.hand[0]" [isHero]="getAffiliation()" [parent]="null"></app-hero-card>
-                <button class="play-btn" *ngIf="response.hand[0] != 0" mat-raised-button (click)="playCard(0)">Play Card</button>
-                <button class="play-btn" *ngIf="response.hand[0] == 0" mat-raised-button (click)="unplayCard(0)">Return Card</button>
+                <button class="btn play-btn" *ngIf="response.hand[0] != 0 && !submittedTurn" mat-raised-button (click)="playCard(0)">Play Card</button>
+                <button class="btn play-btn" *ngIf="response.hand[0] == 0 && !submittedTurn" mat-raised-button (click)="unplayCard(0)">Return Card</button>
             </div>
             <div>
                 <app-hero-card [hero]="gameBoard.hand[1]" [isHero]="getAffiliation()" [parent]="null"></app-hero-card>
-                <button class="play-btn" *ngIf="response.hand[1] != 0" mat-raised-button (click)="playCard(1)">Play Card</button>
-                <button class="play-btn" *ngIf="response.hand[1] == 0" mat-raised-button (click)="unplayCard(1)">Return Card</button>
+                <button class="btn play-btn" *ngIf="response.hand[1] != 0 && !submittedTurn" mat-raised-button (click)="playCard(1)">Play Card</button>
+                <button class="btn play-btn" *ngIf="response.hand[1] == 0 && !submittedTurn" mat-raised-button (click)="unplayCard(1)">Return Card</button>
             </div>
             <div>
                 <app-hero-card [hero]="gameBoard.hand[2]" [isHero]="getAffiliation()" [parent]="null"></app-hero-card>
-                <button class="play-btn" *ngIf="response.hand[2] != 0" mat-raised-button (click)="playCard(2)">Play Card</button>
-                <button class="play-btn" *ngIf="response.hand[2] == 0" mat-raised-button (click)="unplayCard(2)">Return Card</button>
+                <button class="btn play-btn" *ngIf="response.hand[2] != 0 && !submittedTurn" mat-raised-button (click)="playCard(2)">Play Card</button>
+                <button class="btn play-btn" *ngIf="response.hand[2] == 0 && !submittedTurn" mat-raised-button (click)="unplayCard(2)">Return Card</button>
             </div>
         </div>
     </div>
+
+    <div class="gameboard" *ngIf="gameBoard.state == user.id">
+        <h1>You've won the game!</h1>
+    </div>
+
+    <div class="gameboard" *ngIf="gameBoard.state > 0 && gameBoard.state != user.id">
+        <h1>You've lost the game!</h1>
+    </div>
+        
     <div>
         <app-game></app-game>
     </div>
