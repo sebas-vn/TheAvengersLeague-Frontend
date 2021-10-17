@@ -79,7 +79,6 @@ export class GamePlayComponent implements OnInit, OnDestroy {
       this.response.power -= this.gameBoard.hand[index].powerCost;
 
       let insert = this.gameBoardChild.insertItemFromHand(this.gameBoard.hand);
-      console.log(insert);
     }
     
     
@@ -90,7 +89,6 @@ export class GamePlayComponent implements OnInit, OnDestroy {
     this.response.power += this.gameBoard.hand[index].powerCost;
     
     let remove = this.gameBoardChild.returnItemToHand(this.gameBoard.hand);
-    console.log(remove);
   }
 
   submitTurn(): void {
