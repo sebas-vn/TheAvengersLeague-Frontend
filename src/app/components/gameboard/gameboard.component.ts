@@ -11,10 +11,10 @@ import { Gameboard } from 'src/app/interfaces/gameboard';
 })
 export class GameboardComponent implements OnInit {
   
+  @Input() isHero: boolean;
   oneSixtyNine: any[] = new Array(169).fill(0).map((_, i) => i);
   testObject = {};
   startingPosition;
-
   gameBoard: Gameboard;
   
 
@@ -65,6 +65,22 @@ export class GameboardComponent implements OnInit {
 
   }
 
+  // Check the first three positions if they are empty to insert into hand
+  insertItemFromHand(card: any) {
+    if (this.testObject[148].length == 0) {
+      this.testObject[148].push(card);
+
+    } else if (this.testObject[149].length == 1) {
+      this.testObject[148].push(card);
+      
+    } else if (this.testObject[150].length == 1) {
+      this.testObject[148].push(card);
+
+    } else {
+      alert('Move one card from initial position to insert new from hand')
+    }
+  }
+
   drop(event: CdkDragDrop<string[]>) {
     console.log(event.previousContainer.data);
     console.log(event.container.data);
@@ -72,9 +88,8 @@ export class GameboardComponent implements OnInit {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       if (event.container.data.length < 2) { // validate if dropList container array contains less than 2
-        console.log('less than 2')
         let idContainer = event.container.id.split('-')[3]; // get the index portion from the id of the container
-        let newCoord = this.xy(parseInt(idContainer) - 3);
+        let newCoord = this.xy(parseInt(idContainer));
         if (!this.isBlack(newCoord)) { // validate if the position is part of the border 
 
           transferArrayItem(
