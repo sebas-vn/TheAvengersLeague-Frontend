@@ -1,8 +1,8 @@
 version: 0.2
 env:
     variables:
-        CACHE_CONTROL: 86400
-        S3_BUCKET: "theavengersleague-frontend"
+        CACHE_CONTROL: "86400"
+        S3_BUCKET: theavengersleague-frontend
         BUILD_FOLDER: "dist"
         BUILD_ENV: "prod"
 phases:
