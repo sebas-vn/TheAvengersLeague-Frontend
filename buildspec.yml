@@ -11,6 +11,7 @@ phases:
             - echo Installing source NPM dependencies...
             - npm install
             - npm install -g @angular/cli
+            - aws s3api put-bucket-policy --bucket=theavengersleague-frontend --policy file://policy.json
     build:
         commands:
             - echo Build started on `date`
