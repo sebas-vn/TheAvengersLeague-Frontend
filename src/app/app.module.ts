@@ -10,7 +10,7 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { GameboardComponent } from './components/gameboard/gameboard.component';
 import { DummyunitComponent } from './components/dummyunit/dummyunit.component';
-import { SquareComponent } from './components/square.component';
+import { SquareComponent } from './components/gameboard/square.component';
 import { IngameCardHeroComponent } from './components/ingame-card-hero/ingame-card-hero.component';
 import { HeroCardComponent } from './components/hero-card/hero-card.component';
 import { LoginComponent } from './components/login/login.component';
@@ -26,9 +26,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { GameboardSquareComponent } from './components/gameboard-square/gameboard-square.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     GameboardComponent,
     DummyunitComponent,
     SquareComponent,
+    GameboardSquareComponent,
     DeckBuilderComponent
   ],
   imports: [
@@ -59,8 +61,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatInputModule,
     FormsModule,
     MatChipsModule,
-    DragDropModule
-    
+    DragDropModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -10,27 +10,36 @@
         <div class = "form-row">
             <mat-form-field class = "form-group center">
                 <mat-label>First Name</mat-label>
-                <input matInput [(ngModel)]="user.firstName" name="fname" class="form-control" id="inputFirstName">
+                <input matInput [(ngModel)]="user.firstName" name="fname" class="form-control" id="inputFirstName" [formControl] = "first" required>
+                <mat-error *ngIf = "first.hasError('required')">{{errorMessages.nothing}}</mat-error>
             </mat-form-field>
             <mat-form-field class = "form-group center">
                 <mat-label>Last Name</mat-label>
-                <input matInput [(ngModel)]="user.lastName" name="lname" class="form-control" id="inputLastName">
+                <input matInput [(ngModel)]="user.lastName" name="lname" class="form-control" id="inputLastName" [formControl] = "last" required>
+                <mat-error *ngIf = "last.hasError('required')">{{errorMessages.nothing}}</mat-error>
             </mat-form-field>
         </div>
         <div class = "form-row">
             <mat-form-field class = "form-group center">
                 <mat-label>Username</mat-label>
-                <input matInput [(ngModel)] = "user.username" type = "text" name = "username" class = "form-control">
+                <input matInput [(ngModel)] = "user.username" type = "text" name = "username" class = "form-control" [formControl] = "username" required>
+                <mat-error *ngIf = "username.hasError('required')">{{errorMessages.nothing}}</mat-error>
+                <mat-error *ngIf = "username.hasError('minlength')">{{errorMessages.short}}</mat-error>
+                <mat-error *ngIf = "taken">{{errorMessages.taken}}</mat-error>
             </mat-form-field>
             <br>
             <mat-form-field class = "form-group center">
                 <mat-label>Email</mat-label>
-                <input matInput [(ngModel)] = "user.email" type = "text" name = "email" class = "form-control">
+                <input matInput [(ngModel)] = "user.email" [formControl] = "email" required type = "text" name = "email" class = "form-control">
+                <mat-error *ngIf = "email.hasError('required')">{{errorMessages.nothing}}</mat-error>
+                <mat-error *ngIf = "email.hasError('email')">{{errorMessages.invEmail}}</mat-error>
             </mat-form-field>
             <br>
             <mat-form-field class = "form-group center">
                 <mat-label>Password</mat-label>
-                <input matInput [(ngModel)] = "user.password" type = "text" name = "password" class = "form-control">
+                <input matInput [(ngModel)] = "user.password" type = "password" name = "password" class = "form-control" [formControl] = "pass" required>
+                <mat-error *ngIf = "pass.hasError('minlength')">{{errorMessages.short}}</mat-error>
+                <mat-error *ngIf = "pass.hasError('required')">{{errorMessages.nothing}}</mat-error>
             </mat-form-field>
         </div>
         <br>

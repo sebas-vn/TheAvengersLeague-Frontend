@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dummyunit',
@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dummyunit.component.css']
 })
 export class DummyunitComponent {
+
+  @Input('name') itemName;
+  @Input('squareArray') squareArr;
+  @Input() index;
   
   constructor() { }
 
