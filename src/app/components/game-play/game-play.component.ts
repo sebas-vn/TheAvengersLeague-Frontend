@@ -80,9 +80,8 @@ export class GamePlayComponent implements OnInit, OnDestroy {
       this.response.hand[index] = 0;
       this.response.power -= this.gameBoard.hand[index].powerCost;
 
-      let insert = this.gameBoardChild.insertItemFromHand(this.gameBoard.hand);
+      let insert = this.gameBoardChild.insertItemFromHand(this.gameBoard.hand[index]);
     }
-    
     
   }
 
@@ -90,7 +89,7 @@ export class GamePlayComponent implements OnInit, OnDestroy {
     this.response.hand[index] = this.gameBoard.hand[index].id;
     this.response.power += this.gameBoard.hand[index].powerCost;
     
-    let remove = this.gameBoardChild.returnItemToHand(this.gameBoard.hand);
+    let remove = this.gameBoardChild.returnItemToHand(this.gameBoard.hand[index]);
   }
 
   submitTurn(): void {
