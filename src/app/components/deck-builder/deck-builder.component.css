@@ -9,6 +9,7 @@ table td, table td * {
     background-color: #00BB00;
     color: black;
     margin-top: 20px;
+    margin-bottom: 4px;
     width: 90%;
 }
 
@@ -18,4 +19,9 @@ table td, table td * {
     margin-top: 10px;
     width: 80%;
     vertical-align: top;
+}
+
+.inv {
+    display: flex;
+    flex-wrap: wrap;
 }

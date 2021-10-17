@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DeckBuilderComponent } from '../deck-builder/deck-builder.component';
+import { Card } from 'src/app/models/user-inventory';
 
 @Component({
   selector: 'app-hero-card',
@@ -8,18 +9,19 @@ import { DeckBuilderComponent } from '../deck-builder/deck-builder.component';
 })
 export class HeroCardComponent implements OnInit {
 
-  @Input() heroes = [];
-  @Input() hero: boolean = true;
+  @Input() hero: Card = new Card();
+  @Input() isHero: boolean;
   @Input() parent: DeckBuilderComponent;
 
   getBackground(): string {
-    if(this.hero)
+    if(this.isHero)
       return '#2e2ebb';
     else
       return '#bb2e2e';
   }
+
   getForeground(): string {
-    if(this.hero)
+    if(this.isHero)
       return '#DDDDFF';
     else
       return '#FFDDDD'

@@ -37,8 +37,8 @@ export class HomeComponent implements OnInit {
                 this.userService.getDecks(this.user.id).subscribe(
                   data => {
                     this.userDecks = data.body;
-                    this.heroDeck.loadInv(true, this.user, this.inventory, this.userDecks.heroDeck);
-                    this.villainDeck.loadInv(false, this.user, this.inventory, this.userDecks.villianDeck);
+                    this.heroDeck.loadInv(this.user, this.inventory, this.userDecks.heroDeck);
+                    this.villainDeck.loadInv(this.user, this.inventory, this.userDecks.villianDeck);
                   }
                 )
               });
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
   }
 
   startGame(): void {
-    this.router.navigate(['/game-queue']);
+    this.router.navigate(['/play']);
   }
 
   logout(): void {

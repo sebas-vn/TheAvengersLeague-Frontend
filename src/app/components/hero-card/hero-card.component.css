@@ -9,6 +9,7 @@
     border-radius: 16px;
     border-width: 6px;
     border-color: black;
+    flex-grow: 20%;
 }
 
 .card-inner {
