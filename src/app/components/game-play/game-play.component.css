@@ -1,0 +1,52 @@
+
+.queue {
+    margin: auto;
+    width: 99%;
+    height: 99%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.queue-label {
+    font-size: 36px;
+    justify-content: center;
+}
+
+.gameboard {
+    margin: auto;
+    width: 99%;
+    height: 99%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sideboard {
+    margin: auto;
+    margin-top: 5%;
+    width: 99%;
+    height: 99%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    flex-direction: column;
+}
+
+.text-div {
+    width: 85%;
+}
+
+.hand {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.play-btn {
+    width: 90%;
+    background-color: gray;
+    margin-bottom: 10px;
+}
