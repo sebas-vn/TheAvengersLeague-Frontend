@@ -11,8 +11,9 @@
             <input matInput [(ngModel)] = "login.password" type = "password" name = "password" class = "form-control">
         </mat-form-field>
         <br>
-        <button type="submit" class = "btn center" (click)=logIn()>Login</button>
+        <label class = "warn-label"><i>{{ status }}</i></label>
         <br>
-        <label><i>{{ status }}</i></label>
+        <br>
+        <button type="submit" class = "btn center" (click)=logIn()>Login</button>
     </form>
 </div>

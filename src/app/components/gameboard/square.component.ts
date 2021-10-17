@@ -8,7 +8,7 @@ import { Component, Input } from "@angular/core";
     </div>
     `,
     styles: [`
-    :host, div {
+    div {
         display: block;
         height: 100%;
         width: 100%;

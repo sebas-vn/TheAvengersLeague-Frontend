@@ -1,0 +1,10 @@
+div {
+    display: inherit;
+    flex-direction: inherit;
+    align-items: inherit;
+    justify-content: inherit;
+    border: inherit;
+    text-align: inherit;
+    height: 100%;
+    width: 100%;
+}

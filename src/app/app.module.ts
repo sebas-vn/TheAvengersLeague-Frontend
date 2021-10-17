@@ -7,16 +7,15 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
 import { GameboardComponent } from './components/gameboard/gameboard.component';
 import { DummyunitComponent } from './components/dummyunit/dummyunit.component';
-import { SquareComponent } from './components/square.component';
+import { SquareComponent } from './components/gameboard/square.component';
 import { IngameCardHeroComponent } from './components/ingame-card-hero/ingame-card-hero.component';
-import { UpdateComponent } from './components/update/update.component';
 import { HeroCardComponent } from './components/hero-card/hero-card.component';
 import { LoginComponent } from './components/login/login.component';
 import { FrontDoorComponent } from './components/front-door/front-door.component';
+import { DeckBuilderComponent } from './components/deck-builder/deck-builder.component';
 
 
 // Angular Material Components
@@ -30,22 +29,23 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { GameboardSquareComponent } from './components/gameboard-square/gameboard-square.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    NavbarComponent,
     HeroCardComponent,
     RegisterComponent,
-    UpdateComponent,
     LoginComponent,
     FrontDoorComponent,
     IngameCardHeroComponent,
     GameboardComponent,
     DummyunitComponent,
-    SquareComponent
+    SquareComponent,
+    GameboardSquareComponent,
+    DeckBuilderComponent
   ],
   imports: [
     BrowserModule,

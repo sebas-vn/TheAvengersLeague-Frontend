@@ -41,3 +41,75 @@ mat-grid-tile:nth-child(2) {
     margin: 0%;
     padding: 1rem 3rem;
 }
+
+.btn-div {
+    font-size: 24px;
+    border-style: solid;
+    border-radius: 10%;
+    text-align: center;
+    margin: 5%;
+    height: 90%;
+}
+
+.play-btn {
+    background-color: #00BB00;
+    color: black;
+    margin-top: 20px;
+    width: 75%;
+}
+
+.logout-btn {
+    background-color: #CCCCCC;
+    color: black;
+    margin-top: 20px;
+    width: 75%;
+}
+
+.acc-div {
+    font-size: 24px;
+    border-style: solid;
+    border-radius: 10%;
+    text-align: left;
+    margin: 5%;
+    height: 90%;
+}
+
+.acc-header {
+    margin-top: 12px;
+    font-size: 36px;
+    color: purple;
+    text-align: center;
+}
+
+.acc-list {
+    margin: 2%;
+}
+
+table td, table td * {
+    vertical-align: top;
+}
+
+.modify-div {
+    font-size: 24px;
+    border-style: solid;
+    border-radius: 10%;
+    text-align: center;
+    margin: 5%;
+    height: 90%;
+}
+
+.form-group {
+    width: 75%;
+}
+
+.modify-btn {
+    background-color: #CCCCCC;
+    color: black;
+    margin-bottom: 20px;
+    width: 75%;
+}
+
+.modify-status {
+    color: red;
+    font-size: 18px;
+}
