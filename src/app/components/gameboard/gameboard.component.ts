@@ -11,11 +11,11 @@ import { Gameboard } from 'src/app/interfaces/gameboard';
 })
 export class GameboardComponent implements OnInit {
   
+  @Input() isHero: boolean;
+  @Input() gameBoard: Gameboard;
   oneSixtyNine: any[] = new Array(169).fill(0).map((_, i) => i);
   testObject = {};
   startingPosition;
-
-  gameBoard: Gameboard;
   
 
   constructor(private tgameService: TestgameService, private cd: ChangeDetectorRef) { }
@@ -25,12 +25,8 @@ export class GameboardComponent implements OnInit {
       this.testObject[e] = [];
     });
 
-    // getting the current state of the game
-    this.tgameService.getGamePlay()
-    .subscribe(data => {
-      this.gameBoard = data;
-      this.setItemInTable(this.gameBoard.gameBoard); // comparing positions in each table
-    });
+    // Set intial items in gameboard
+    this.setItemInTable(this.gameBoard.gameBoard);
   }
 
   xy(i): Coord {
@@ -65,6 +61,54 @@ export class GameboardComponent implements OnInit {
 
   }
 
+  // Check the first three positions if they are empty to insert into hand
+  insertItemFromHand(card: any): boolean {
+    if (this.testObject[148].length == 0) {
+      this.testObject[148].push(card);
+      return true;
+
+    } else if (this.testObject[149].length == 0) {
+      this.testObject[149].push(card);
+      return true;
+      
+    } else if (this.testObject[150].length == 0) {
+      this.testObject[150].push(card);
+      return true;
+
+    } else {
+      alert('Move one card from initial position to insert new from hand');
+      return false;
+    }
+  }
+
+  returnItemToHand(card: any): boolean {
+    if (this.testObject[148].length == 1) {
+      if (card.id === this.testObject[148][0].id) {
+        this.testObject[148].splice(0, 1);
+        return true;
+      }
+    } else if (this.testObject[149].length == 1) {
+      if (card.id === this.testObject[149][0].id) {
+        this.testObject[149].splice(0, 1);
+        return true;
+      }
+      
+    } else if (this.testObject[150].length == 1) {
+      if (card.id === this.testObject[150][0].id) {
+        this.testObject[149].splice(0, 1);
+        return true;
+      }
+
+    } else {
+      alert('Could not return from hand');
+      return false;
+    }
+  }
+
+  checkMovementDistance() {
+    
+  }
+
   drop(event: CdkDragDrop<string[]>) {
     console.log(event.previousContainer.data);
     console.log(event.container.data);
@@ -72,9 +116,8 @@ export class GameboardComponent implements OnInit {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       if (event.container.data.length < 2) { // validate if dropList container array contains less than 2
-        console.log('less than 2')
         let idContainer = event.container.id.split('-')[3]; // get the index portion from the id of the container
-        let newCoord = this.xy(parseInt(idContainer) - 3);
+        let newCoord = this.xy(parseInt(idContainer));
         if (!this.isBlack(newCoord)) { // validate if the position is part of the border 
 
           transferArrayItem(
