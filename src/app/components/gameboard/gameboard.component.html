@@ -10,7 +10,7 @@
                     <!-- <app-dummyunit *ngIf="pos.x === dp.x && pos.y === dp.y" cdkDrag></app-dummyunit> -->
 
                     <ng-container *ngIf="testObject[i].length > 0">
-
+                        {{i}}
                         <app-dummyunit *ngFor="let hero of testObject[i]; index as k"
                         [card]="hero" 
                         [squareArray]="testObject[i]" 
@@ -23,21 +23,7 @@
             </ng-container>
         </ng-container>
     </div>
-    
-    <div class="hand">
-        <ng-container *ngFor="let i of gameBoard.hand">
-            <app-square
-            cdkDropList
-            id="hand"
-            [cdkDropListData]="gameBoard.hand"
-            [cdkDropListEnterPredicate]="falsePredicate"
-            (cdkDropListDropped)="drop($event)">
-                <div cdkDrag> 
-                    {{i.id}}  
-                </div>
-            </app-square>
-        </ng-container>
-    </div>
+
 </div>
 
     

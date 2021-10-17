@@ -6,6 +6,8 @@ div {
     height: inherit;
     background-color: inherit;
     cursor: pointer;
+    color: azure;
+    font-weight: 600;
 }
 
 .only-item {

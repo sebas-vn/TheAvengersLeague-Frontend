@@ -23,7 +23,7 @@ export class DummyunitComponent {
 
   ngOnInit(): void {
 
-    //console.log(this.card, this.squareArr, this.index);
+    console.log(this.card, this.squareArr, this.index);
   }
 
   
