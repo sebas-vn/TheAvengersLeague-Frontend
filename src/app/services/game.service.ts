@@ -29,6 +29,12 @@ export class GameService {
       .pipe( catchError(this.handleError) );
   }
 
+  public leaveGame(): Observable<HttpResponse<any>> 
+  {
+    return this.http.get<any>(`${sendUrl}api/game/leave`, {observe: 'response', headers: this.generateHeaders()})
+      .pipe( catchError(this.handleError) );
+  }
+
   public updateGame(gameUpdate: GameUpdate): Observable<HttpResponse<any>> 
   {
     return this.http.post<any>(`${sendUrl}api/game/play`, gameUpdate, {observe: 'response', headers: this.generateHeaders()})

@@ -14,6 +14,28 @@
     justify-content: center;
 }
 
+.btn {
+    background-color: gray;
+    margin-bottom: 10px;
+}
+
+.play-btn {
+    width: 90%;
+}
+
+.submit-btn {
+    width: 25%;
+}
+
+.leave-btn {
+    width: 90%;
+}
+
+.concede-btn {
+    width: 25%;
+    margin-left: 50%;
+}
+
 .gameboard {
     margin: auto;
     width: 99%;
@@ -43,10 +65,4 @@
     justify-content: left;
     align-items: center;
     flex-wrap: wrap;
-}
-
-.play-btn {
-    width: 90%;
-    background-color: gray;
-    margin-bottom: 10px;
 }
