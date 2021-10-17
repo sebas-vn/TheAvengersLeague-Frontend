@@ -49,7 +49,7 @@
 
 .double-item-container{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
     border: 1px solid black;
