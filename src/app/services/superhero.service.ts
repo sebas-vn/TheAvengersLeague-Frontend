@@ -48,7 +48,6 @@ export class SuperheroService {
         Backend returned code ${httpError.status},
         body was: ${httpError.error}
       `);
-
       return throwError('Something bad happened; please try again later');
     }
   }

@@ -1,4 +1,4 @@
-import { UserInventory } from './../../models/user-inventory';
+import { UserInventory, Card } from './../../models/user-inventory';
 import { Component, OnInit, Input } from '@angular/core';
 import { SuperheroService } from './../../services/superhero.service';
 import { User } from 'src/app/models/user';
@@ -10,8 +10,8 @@ import { User } from 'src/app/models/user';
 })
 export class DeckBuilderComponent implements OnInit {
 
-  cards = [];
-  hero: boolean;
+  cards: Card[] = [];
+  @Input() hero: boolean;
   user: User;
   inventory: UserInventory;
 
@@ -19,30 +19,32 @@ export class DeckBuilderComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  private loadInv(hero: boolean, user:User, inventory: UserInventory): void {
+  public loadInv(hero: boolean, user:User, inventory: UserInventory): void {
     this.hero = hero;
     this.user = user;
     this.inventory = inventory;
     
+    console.log(inventory);
+
     for(let card of inventory.cards) {
-      if( card.id > 0 && (card.affiliation == 'Neutral' || (card.affiliation == 'Hero' && this.hero) || (card.affiliation == 'Villain' && !this.hero))) {
-        this.heroService.getSuperHeroById(card.id)
-          .subscribe(data => {
-              this.cards.push(data);
-            },
-            error => console.error(error)
-          );
+      if(  card.affiliation == 'Neutral' || (card.affiliation == 'Hero' && this.hero) || (card.affiliation == 'Villain' && !this.hero)) {
+        if(this.shouldGetCard(card)) {
+          this.heroService.getSuperHeroById(card.id)
+            .subscribe(data => {
+                //TODO: assign data from get to the card
+                console.log(data)
+              },
+              error => console.error(error)
+            );
+        }
+        this.cards.push(card);
       }
     }
   }
 
-  getHero(): void {
-    this.heroService.getSuperHero()
-      .subscribe(data => {
-          this.cards.push(data);
-        },
-        error => console.error(error)
-      );
+  private shouldGetCard(card: Card): boolean {
+    //return card.id > 0 && card.image == null;
+    return false; //since the api isn't working, let's avoiding spamming the console
   }
 
 }

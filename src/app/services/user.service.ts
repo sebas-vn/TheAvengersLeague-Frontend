@@ -7,6 +7,7 @@ import { sendUrl } from 'src/environments/environment';
 import { ModifyUser } from '../models/modify-user';
 import { UserInventory } from '../models/user-inventory';
 import { LoginMessage } from '../models/login-message';
+import { UserDecks } from '../models/user-decks';
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +79,14 @@ export class UserService {
   public getInventory(id: number): Observable<HttpResponse<UserInventory>>
   {
     return this.http.get<UserInventory>(`${sendUrl}api/user/inventory/id=${id}`, {observe: 'response', headers: this.generateHeaders()})
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  public getDecks(id: number): Observable<HttpResponse<UserDecks>>
+  {
+    return this.http.get<UserDecks>(`${sendUrl}api/user/decks/id=${id}`, {observe: 'response', headers: this.generateHeaders()})
       .pipe(
         catchError(this.handleError)
       );

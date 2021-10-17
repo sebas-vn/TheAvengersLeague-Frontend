@@ -8,24 +8,24 @@ import { Component, Input, OnInit } from '@angular/core';
 export class HeroCardComponent implements OnInit {
 
   @Input() heroes = [];
-  statView: boolean = true;
-  currentViewStats: string[] = []; // Array that stores variables that have view stats active
+  @Input() hero: boolean = true;
+
+  getBackground(): string {
+    if(this.hero)
+      return '#2e2ebb';
+    else
+      return '#bb2e2e';
+  }
+  getForeground(): string {
+    if(this.hero)
+      return '#DDDDFF';
+    else
+      return '#FFDDDD'
+  }
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
-  enableStatView(id: string) {
-    this.currentViewStats.push(id);
-    console.log(this.currentViewStats);
-  }
-
-  disableStatView(id: string) {
-    if (this.currentViewStats.includes(id)) {
-      this.currentViewStats.splice(this.currentViewStats.indexOf(id), 1);
-    }
-  }
+  ngOnInit(): void {}
 
   updateUrl(event) {
     event.target.attributes.src.value = "../../../assets/generic-hero.jpg"
