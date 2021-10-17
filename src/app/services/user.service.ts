@@ -8,7 +8,7 @@ import { ModifyUser, ModifyDecks } from '../models/modify-user';
 import { UserInventory } from '../models/user-inventory';
 import { LoginMessage } from '../models/login-message';
 import { UserDecks } from '../models/user-decks';
-import { CookieService } from './cookie-service.service';
+import { CookieService } from './cookie.service';
 
 @Injectable({
   providedIn: 'root'

@@ -70,11 +70,11 @@
                     </mat-tab>
 
                     <mat-tab label="Hero Deck">
-                        <app-deck-builder #heroDeck></app-deck-builder>
+                        <app-deck-builder #heroDeck [isHero]=true></app-deck-builder>
                     </mat-tab>
 
                     <mat-tab label="Villain Deck">
-                        <app-deck-builder #villainDeck></app-deck-builder>
+                        <app-deck-builder #villainDeck [isHero]=false></app-deck-builder>
                     </mat-tab>
 
                 </mat-tab-group>

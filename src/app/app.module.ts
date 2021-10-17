@@ -30,6 +30,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GameboardSquareComponent } from './components/gameboard-square/gameboard-square.component';
+import { GamePlayComponent } from './components/game-play/game-play.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { GameboardSquareComponent } from './components/gameboard-square/gameboar
     DummyunitComponent,
     SquareComponent,
     GameboardSquareComponent,
-    DeckBuilderComponent
+    DeckBuilderComponent,
+    GamePlayComponent
   ],
   imports: [
     BrowserModule,

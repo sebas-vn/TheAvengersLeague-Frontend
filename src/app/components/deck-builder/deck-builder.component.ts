@@ -2,7 +2,6 @@ import { ModifyDecks } from './../../models/modify-user';
 import { UserService } from 'src/app/services/user.service';
 import { UserInventory, Card } from './../../models/user-inventory';
 import { Component, OnInit, Input } from '@angular/core';
-import { SuperheroService } from './../../services/superhero.service';
 import { User } from 'src/app/models/user';
 
 @Component({
@@ -17,17 +16,16 @@ export class DeckBuilderComponent implements OnInit {
   saveStatus: string = '';
   saveStatusColor: string = 'green';
 
-  @Input() hero: boolean;
+  @Input() isHero: boolean;
   user: User;
   inventory: UserInventory;
 
-  constructor(private heroService: SuperheroService, private userService: UserService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {}
 
-  public loadInv(hero: boolean, user:User, inventory: UserInventory, deck: Card[]): void {
+  public loadInv(user:User, inventory: UserInventory, deck: Card[]): void {
 
-    this.hero = hero;
     this.user = user;
     this.inventory = inventory;
 
@@ -37,7 +35,7 @@ export class DeckBuilderComponent implements OnInit {
     }
 
     for(let card of inventory.cards) {
-      if(  card.affiliation == 'Neutral' || (card.affiliation == 'Hero' && this.hero) || (card.affiliation == 'Villain' && !this.hero)) {
+      if(  card.affiliation == 'Neutral' || (card.affiliation == 'Hero' && this.isHero) || (card.affiliation == 'Villain' && !this.isHero)) {
         if(this.shouldGetCard(card)) {
 
           card.combat = 0;
@@ -50,15 +48,6 @@ export class DeckBuilderComponent implements OnInit {
           card.image = '';
           card.occupation = 'none';
           
-          //TODO: assign data from get api to the card
-          /*
-          this.heroService.getSuperHeroById(card.id)
-            .subscribe(data => {
-                console.log(data)
-              },
-              error => console.error(error)
-            );
-          */
         }
         this.cards.push(card);
       }
@@ -80,7 +69,7 @@ export class DeckBuilderComponent implements OnInit {
   saveDeck():void {
     if(this.deck.length >= 5 && this.deck.length <= 20) {
       const modifyDeck: ModifyDecks = new ModifyDecks();
-      if(this.hero)
+      if(this.isHero)
         modifyDeck.heroDeck = this.deck;
       else
         modifyDeck.villianDeck = this.deck;

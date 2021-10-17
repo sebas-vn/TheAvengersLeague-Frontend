@@ -1,7 +1,7 @@
 import { GameBoard, GameUpdate } from './../models/gameboard';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from "@angular/common/http";
-import { CookieService } from './cookie-service.service';
+import { CookieService } from './cookie.service';
 import { Observable, throwError } from 'rxjs';
 import { sendUrl } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class GameServiceService {
+export class GameService {
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
@@ -19,13 +19,19 @@ export class GameServiceService {
 
   public getGame(): Observable<HttpResponse<GameBoard>> 
   {
-    return this.http.get<GameBoard>(`${sendUrl}api/user/get`, {observe: 'response', headers: this.generateHeaders()})
+    return this.http.get<GameBoard>(`${sendUrl}api/game/play`, {observe: 'response', headers: this.generateHeaders()})
+      .pipe( catchError(this.handleError) );
+  }
+
+  public getGameForce(): Observable<HttpResponse<GameBoard>> 
+  {
+    return this.http.get<GameBoard>(`${sendUrl}api/game/play-force`, {observe: 'response', headers: this.generateHeaders()})
       .pipe( catchError(this.handleError) );
   }
 
   public updateGame(gameUpdate: GameUpdate): Observable<HttpResponse<any>> 
   {
-    return this.http.post<any>(`${sendUrl}api/user/get`, gameUpdate, {observe: 'response', headers: this.generateHeaders()})
+    return this.http.post<any>(`${sendUrl}api/game/play`, gameUpdate, {observe: 'response', headers: this.generateHeaders()})
       .pipe( catchError(this.handleError) );
   }
 
