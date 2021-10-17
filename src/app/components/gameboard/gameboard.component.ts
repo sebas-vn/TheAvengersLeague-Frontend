@@ -106,33 +106,65 @@ export class GameboardComponent implements OnInit {
     }
   }
 
-  checkMovementDistance() {
-    
+  checkMovementDistance(oldCoords: any, newCoords: any, card: any): Promise<any>{
+    return new Promise((resolve, reject) => {
+      let maxDistance = Math.floor((card.speed / 25) + 1);
+      console.log(oldCoords, newCoords);
+      
+      let condition = (oldCoords.x - newCoords.x) <= maxDistance && 
+                      (oldCoords.y - newCoords.y) <= maxDistance;
+
+      if(!condition) {
+        reject(`You are only allowed to move ${maxDistance} squares`);
+      } else {
+        resolve(true);
+      }
+
+    });
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    console.log(event.previousContainer.data);
-    console.log(event.container.data);
-    if (event.previousContainer === event.container) {
+  async drop(event: CdkDragDrop<string[]>) {
+
+    // Check if the dropped element is already inside the current element
+    if (event.previousContainer === event.container) { 
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      if (event.container.data.length < 2) { // validate if dropList container array contains less than 2
-        let idContainer = event.container.id.split('-')[3]; // get the index portion from the id of the container
+
+      // validate if dropList container array contains less than 2
+      if (event.container.data.length < 2) { 
+        // get the index portion from the id of the prev container and new container 
+        let idPrevContainer = event.container.id.split('-')[3];
+        let idContainer = event.container.id.split('-')[3]; 
         let newCoord = this.xy(parseInt(idContainer));
-        if (!this.isBlack(newCoord)) { // validate if the position is part of the border 
+        let prevCoord = this.xy(parseInt(idPrevContainer));
+        // validate if the position is part of the border 
+        if (!this.isBlack(newCoord)) {
 
-          transferArrayItem(
-            event.previousContainer.data,
-            event.container.data,
-            event.previousIndex,
-            event.currentIndex
-          );
+          try {
 
-          // Update positions of items in container
-          event.container.data.forEach(e => {
-            e['x'] = newCoord.x;
-            e['y'] = newCoord.y;
-          });
+            await this.checkMovementDistance(
+              prevCoord,
+              newCoord,
+              event.container.data
+              );
+
+              // transfer the card from the previous container to the new container
+              transferArrayItem(
+                event.previousContainer.data,
+                event.container.data,
+                event.previousIndex,
+                event.currentIndex
+              );
+    
+              // Update positions of items in container for gameBoard
+              event.container.data.forEach(e => {
+                e['x'] = newCoord.x;
+                e['y'] = newCoord.y;
+              });
+            
+          } catch (error) {
+            console.error(error);
+          }
 
         } else {
           alert("Cannot move outside of the border");
