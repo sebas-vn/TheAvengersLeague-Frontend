@@ -4,6 +4,7 @@ import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Gameboard } from 'src/app/interfaces/gameboard';
 import { Card } from 'src/app/models/user-inventory';
+import { GameObject } from 'src/app/models/gameboard';
 
 @Component({
   selector: 'app-game',
@@ -14,6 +15,7 @@ export class GameboardComponent implements OnInit {
   
   @Input() isHero: boolean;
   @Input() gameBoard: Gameboard;
+  status: string = '';
   oneSixtyNine: any[] = new Array(169).fill(0).map((_, i) => i);
   testObject = {};
   startingPosition;
@@ -22,11 +24,13 @@ export class GameboardComponent implements OnInit {
   constructor(private tgameService: TestgameService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    this.updateBoard();
+  }
+
+  updateBoard(): void {
     this.oneSixtyNine.forEach((e) => {
       this.testObject[e] = [];
     });
-
-    // Set intial items in gameboard
     this.setItemInTable(this.gameBoard.gameBoard);
   }
 
@@ -35,6 +39,10 @@ export class GameboardComponent implements OnInit {
       x: i % 13,
       y: Math.floor(i / 13)
     };
+  }
+
+  toCell(x: number, y: number): number {
+    return (x) + ((y+1) * 13)
   }
 
   isBlack({ x, y }: Coord) {
@@ -50,30 +58,28 @@ export class GameboardComponent implements OnInit {
   }
 
   setItemInTable(gameBoard) {
-
-    this.oneSixtyNine.forEach((e) => {
-      let coords = this.xy(e);
-      gameBoard.forEach(el => {
-        if (el.x === coords.x && el.y === coords.y) {
-          this.testObject[e].push(el);
-        }
-      });
-    })
-
+    gameBoard.forEach(el => {
+      let pos = this.toCell(el.x, el.y)
+      this.testObject[pos].push(el);
+    });
   }
 
   // Check the first three positions if they are empty to insert into hand
   insertItemFromHand(card: Card): Coord {
     let search: number[] = [];
-    if(this.isHero)
+    if(!this.isHero)
       search = [149,148,150];
     else
-      search = [17,16,18];
+      search = [19,18,20];
 
     for(let i of search) {
       if(this.testObject[i].length == 0) {
-        this.testObject[i].push(card);
-        return this.xy(i);
+        let coord: Coord = this.xy(i);
+        if(this.isHero)
+          this.testObject[i].push( new GameObject(coord.x, coord.y, card.durability, null, 'hero', 'GameCard', card));
+        else
+          this.testObject[i].push( new GameObject(coord.x, coord.y, card.durability, null, 'villain', 'GameCard', card));
+        return coord;
       }
     }
     return null;
@@ -82,14 +88,14 @@ export class GameboardComponent implements OnInit {
   // Evaluate the first positions from the gameboard to return the matching card
   returnItemToHand(card: Card): Coord {
     let search: number[] = [];
-    if(this.isHero)
+    if(!this.isHero)
       search = [149,148,150];
     else
-      search = [17,16,18];
+      search = [19,18,20];
 
     for(let i of search) {
       for(let j = 0; j < this.testObject[i].length; j++) {
-        if (card.id === this.testObject[i][j].id) {
+        if (card.id == this.testObject[i][j].card.id) {
           this.testObject[i].splice(j, 1);
           return this.xy(i);
         }
@@ -98,72 +104,88 @@ export class GameboardComponent implements OnInit {
     return null;
   }
 
-  checkMovementDistance(oldCoords: any, newCoords: any, card: any): Promise<any>{
-    return new Promise((resolve, reject) => {
-      let maxDistance = Math.floor((card.speed / 25) + 1);
-      console.log(oldCoords, newCoords);
-      
-      let condition = (oldCoords.x - newCoords.x) <= maxDistance && 
-                      (oldCoords.y - newCoords.y) <= maxDistance;
+  checkMovementDistance(oldCoords: Coord, newCoords: Coord, card: Card): boolean {
+    console.log(oldCoords)
+    console.log(newCoords)
 
-      if(!condition) {
-        reject(`You are only allowed to move ${maxDistance} squares`);
-      } else {
-        resolve(true);
-      }
+    let maxDistance = Math.floor(card.speed / 25) + 1; 
+    let distance = Math.abs(oldCoords.x - newCoords.x) + Math.abs(oldCoords.y - newCoords.y);
 
-    });
+    if(distance < maxDistance) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  async drop(event: CdkDragDrop<string[]>) {
+  async drop(event: CdkDragDrop<GameObject[]>) {
+
+    let object = null;
+    if(event.container.data.length == 1)
+      object = event.container.data[0]
+    if(event.container.data.length == 2)
+      object = event.container.data[1]
+
+    if(this.isHero && event.previousContainer.data.length > 0) {
+      if(event.previousContainer.data[0].affiliation == 'hero') {
+        object = event.previousContainer.data[0];
+        event.previousIndex = 0;
+      } else if(event.previousContainer.data.length > 1) {
+        object = event.previousContainer.data[1];
+        event.previousIndex = 1;
+      }
+    }
 
     // Check if the dropped element is already inside the current element
-    if (event.previousContainer === event.container) { 
+    if(object == null) {
+      if(this.isHero)
+        this.status = "You can only move hero cards";
+      else 
+        this.status = "You can only move villain cards";
+    } else if (event.previousContainer === event.container) { 
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else if(this.isHero && event.container.data.length > 0 && event.container.data[0].affiliation == 'hero') {
+      this.status = "Only 1 hero card per cell.";
+    } else if(!this.isHero && event.container.data.length > 0 && event.container.data[0].affiliation == 'villain') {
+      this.status = "Only 1 villain card per cell.";
+    } else if(event.container.data.length > 1) {
+      this.status = "Only be 2 cards per cell";
+    } else if(object.uuid == null || object.uuid.length < 16) {
+      this.status = "Cannot move newly deployed cards.";
     } else {
+      // get the index portion from the id of the prev container and new container 
+      let idContainer = event.container.id.split('-')[3];
+      let newCoord = this.xy(parseInt(idContainer));
+      
+      // validate if the position is part of the border 
+      if (!this.isBlack(newCoord)) {
 
-      // validate if dropList container array contains less than 2
-      if (event.container.data.length < 2) { 
-        // get the index portion from the id of the prev container and new container 
-        let idPrevContainer = event.container.id.split('-')[3];
-        let idContainer = event.container.id.split('-')[3]; 
-        let newCoord = this.xy(parseInt(idContainer));
-        let prevCoord = this.xy(parseInt(idPrevContainer));
-        // validate if the position is part of the border 
-        if (!this.isBlack(newCoord)) {
-
+        let objectReference = null;
+        for(let obj of this.gameBoard.gameBoard) {
+          if(obj.uuid == object.uuid) {
+            objectReference = obj;
+            break;
+          }
+        }
+        if(objectReference == null) {
+          this.status = "oh no, we couldn't find the origonal object";
+        } else if(!this.checkMovementDistance( {x: objectReference.x, y: objectReference.y+1}, newCoord, object.card)) {
+          this.status = 'Not in movement range.';
+        } else {
           try {
-
-            await this.checkMovementDistance(
-              prevCoord,
-              newCoord,
-              event.container.data
-              );
-
-              // transfer the card from the previous container to the new container
-              transferArrayItem(
-                event.previousContainer.data,
-                event.container.data,
-                event.previousIndex,
-                event.currentIndex
-              );
-    
-              // Update positions of items in container for gameBoard
-              event.container.data.forEach(e => {
-                e['x'] = newCoord.x;
-                e['y'] = newCoord.y;
-              });
-            
+            // transfer the card from the previous container to the new container
+            transferArrayItem(
+              event.previousContainer.data,
+              event.container.data,
+              event.previousIndex,
+              event.currentIndex
+            );
           } catch (error) {
             console.error(error);
           }
-
-        } else {
-          alert("Cannot move outside of the border");
         }
-
       } else {
-        alert("There should only be 2 items");
+        this.status = "Cannot move outside of the game board";
       }
     }
   }

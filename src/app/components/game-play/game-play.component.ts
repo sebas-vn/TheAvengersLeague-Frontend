@@ -67,11 +67,17 @@ export class GamePlayComponent implements OnInit, OnDestroy {
   }
 
   submitTurn(): void {
-    this.response.power = 100;
     this.submittedTurn = true;
     this.gameService.updateGame(this.response).subscribe(
-      data => { console.log(data); this.handleStatus(data.body) },
-      error => { console.log(error); this.handleStatus(error); this.submittedTurn = false; }
+      data => { 
+        this.handleStatus(data.body);
+        if('error' in data.body) 
+          this.submittedTurn = false;  
+      },
+      error => { 
+        this.handleStatus(error); 
+        this.submittedTurn = false; 
+      }
     );
   }
 
