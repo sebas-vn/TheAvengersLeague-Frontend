@@ -60,6 +60,8 @@ export class GamePlayComponent implements OnInit, OnDestroy {
         else if(data.body.error)
             this.handleStatus(data.body.error);
 
+        console.log(data);
+
         if(data.body.gameBoard && (this.gameBoard == null || data.body.turn > this.gameBoard.turn) ) {
           this.gameBoard = data.body;
           this.response = new GameUpdate(this.gameBoard);
