@@ -73,6 +73,9 @@ export class GameObjectMoves {
     y: number;
 
     constructor(uuid: string = null, id = 0, x: number, y: number) {
-
+        this.uuid = uuid;
+        this.id = id;
+        this.x = x;
+        this.y = y;
     }
 }
