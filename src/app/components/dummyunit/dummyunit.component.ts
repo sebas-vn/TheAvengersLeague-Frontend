@@ -23,7 +23,8 @@ export class DummyunitComponent {
 
   ngOnInit(): void {
 
-    this.imageUrl = `url(${this.card.image})`;
+    this.card.card.image = this.card.card.image ? this.card.card.image : '../../../assets/generic-hero.jpg';
+    this.imageUrl = `url(${this.card.card.image})`;
 
     console.log(this.card, this.squareArr, this.index);
   }

@@ -15,7 +15,6 @@ export class GameboardComponent implements OnInit {
   
   @Input() isHero: boolean;
   @Input() gameBoard: Gameboard;
-  @ViewChild('cardBoardUnit', {static: false}) cardBoardUnitChild:DummyunitComponent;
   @Output() moveObject = new EventEmitter<GameObjectMoves>();
 
   status: string = '';
@@ -65,10 +64,6 @@ export class GameboardComponent implements OnInit {
       let pos = this.toCell(el.x, el.y)
       this.testObject[pos].push(el);
     });
-  }
-
-  dragStart(event) {
-    console.log(event);
   }
 
   // Check the first three positions if they are empty to insert into hand
