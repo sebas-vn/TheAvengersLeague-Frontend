@@ -29,7 +29,9 @@ export class DummyunitComponent {
 
   showCard(event, bool) {
     this.showC.show = bool;
-    this.showC.id = event.card.id;
+    this.showC.id = event.card.card.id;
+    console.log(this.showC);
+    console.log(event);
   }
 
   getBorderColor(): string {
