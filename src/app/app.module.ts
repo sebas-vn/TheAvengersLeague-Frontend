@@ -31,6 +31,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GameboardSquareComponent } from './components/gameboard-square/gameboard-square.component';
 import { GamePlayComponent } from './components/game-play/game-play.component';
+import { MatListModule } from '@angular/material/list';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { GamePlayComponent } from './components/game-play/game-play.component';
     FormsModule,
     MatChipsModule,
     DragDropModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

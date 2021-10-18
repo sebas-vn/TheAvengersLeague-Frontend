@@ -1,18 +1,30 @@
 .form-group {
-    padding: 1.5%
+    padding: 1rem;
 }
 
 .alert {
     margin-top: 3%;
 }
 
-.center {
-    width: auto;
-    margin: auto;
-    padding: 10px;
-    text-align: center
-}
-
 .warn-label {
     color: red;
+    margin-bottom: 10px;
+}
+
+.full-width {
+    width: 95%;
+}
+
+.login {
+    margin-top: 1rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.error-label {
+    margin-bottom: 20px;
+}
+
+.btn {
+    width: 100%;
 }

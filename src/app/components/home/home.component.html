@@ -5,7 +5,7 @@
     </div>
 
     <mat-grid-list cols="12" rowHeight="55.5rem" gutterSize="2rem">
-        <mat-grid-tile [colspan]="12">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" [colspan]="12">
 
             <div class="tile-container">
                 <mat-tab-group animationDuration="0ms" dynamicHeight>
@@ -15,54 +15,102 @@
                             <tbody>
                             <tr>
                             <td style="width: 33%;">
-                                <div class="btn-div">
-                                    <p class="acc-header" style="text-align: center;">
-                                    <label class="acc-label"><b>Gameplay</b></label>
-                                    </p>
-                                    <button class="btn play-btn" mat-raised-button (click)="startGame()">Play</button>
-                                    <button class="btn logout-btn" mat-raised-button (click)="logout()">Logout</button>
-                                </div>
+                                <mat-card >
+                                    <div class="header">
+                                        <label class="acc-label"><b>Gameplay</b></label>
+                                    </div>
+                                    <div class="content">
+                                        <button class="btn play-btn" mat-raised-button (click)="startGame()">Play</button>
+                                        <button class="btn logout-btn" mat-raised-button (click)="logout()">Logout</button>
+                                    </div>
+                                </mat-card>
                             </td>
                             <td style="width: 33%;">
-                                <div class="acc-div">
-                                    <p class="acc-header" style="text-align: center;">
-                                    <label class="acc-label"><b>Account</b></label>
-                                    </p>
-                                    <ul>
-                                        <li class="acc-list"> <label>Username: {{ user.username }}</label> </li>
-                                        <li class="acc-list"> <label>Email: {{ user.email }}</label> </li>
-                                        <li class="acc-list"> <label>First Name: {{ user.firstName }}</label> </li>
-                                        <li class="acc-list"> <label>Last Name: {{ user.lastName }}</label> </li>
-                                    </ul>
-                                </div>
+                                <mat-card>
+                                    <div class="header">
+                                        <label class="acc-label"><b>Account</b></label>
+                                    </div>
+                                    <div class="content-list">
+
+                                        <div style="width: 100%; margin-top: 5rem;">
+
+                                            <mat-list dense role="list">
+                                                <mat-list-item role="listitem">
+                                                  <label>Username:</label>    &nbsp;
+                                                  <label> {{ user.username }}</label>
+                                                </mat-list-item>
+                    
+                                                <mat-divider></mat-divider>
+                    
+                                                <mat-list-item role="listitem">
+                                                  <label>Email:</label>   &nbsp;
+                                                  <label>{{ user.email }}</label>
+                                                </mat-list-item>
+                    
+                                                <mat-divider></mat-divider>
+                    
+                                                <mat-list-item role="listitem">
+                                                  <label>First Name:</label>  &nbsp;
+                                                  <label>{{ user.firstName }}</label>
+                                                </mat-list-item>
+                    
+                                                <mat-divider></mat-divider>
+                    
+                                                <mat-list-item role="listitem">
+                                                  <label>Last Name:</label> &nbsp;
+                                                  <label>{{ user.lastName }}</label>
+                                                </mat-list-item>
+                                              </mat-list>
+
+                                        </div>
+
+                                    </div>
+                                </mat-card>
                             </td>
                             <td style="width: 33%; text-align: center;">
-                                <div class="modify-div">
-                                    <p class="acc-header" style="text-align: center;">
-                                    <label class="acc-label"><b>Modify Account</b></label>
-                                    </p>
-                                    <mat-form-field class = "form-group center">
-                                        <mat-label>Current Password</mat-label>
-                                        <input matInput [(ngModel)]="modifyUser.currentPassword" name="curPass" class="form-control" id="inputCurPass">
-                                    </mat-form-field>
-                                    <mat-form-field class = "form-group center">
-                                        <mat-label>New Password</mat-label>
-                                        <input matInput [(ngModel)]="modifyUser.newPassword" name="newPass" class="form-control" id="inputNewPass">
-                                    </mat-form-field>
-                                    <mat-form-field class = "form-group center">
-                                        <mat-label>New First Name</mat-label>
-                                        <input matInput [(ngModel)]="modifyUser.firstName" name="newFirst" class="form-control" id="inputFirstName">
-                                    </mat-form-field>
-                                    <mat-form-field class = "form-group center">
-                                        <mat-label>New Last Name</mat-label>
-                                        <input matInput [(ngModel)]="modifyUser.lastName" name="newLast" class="form-control" id="inputLastName">
-                                    </mat-form-field>
+                                <mat-card>
+                                    <div class="header">
+                                        <label class="acc-label"><b>Modify Account</b></label>
+                                    </div>
                                     <br>
+
+                                    <div class="content">
+                                        <mat-grid-list cols="1" rowHeight="90px" style="width: 100%;">
+                                            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                                                <mat-form-field class = "form-group center" appearance="fill">
+                                                    <mat-label>Current Password</mat-label>
+                                                    <input matInput [(ngModel)]="modifyUser.currentPassword" name="curPass" class="form-control" id="inputCurPass">
+                                                </mat-form-field>
+                                            </mat-grid-tile>
+                                            
+                                            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                                                <mat-form-field class = "form-group center" appearance="fill">
+                                                    <mat-label>New Password</mat-label>
+                                                    <input matInput [(ngModel)]="modifyUser.newPassword" name="newPass" class="form-control" id="inputNewPass">
+                                                </mat-form-field>                                                
+                                            </mat-grid-tile>
+    
+                                            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                                                <mat-form-field class = "form-group center" appearance="fill">
+                                                    <mat-label>New First Name</mat-label>
+                                                    <input matInput [(ngModel)]="modifyUser.firstName" name="newFirst" class="form-control" id="inputFirstName">
+                                                </mat-form-field>                                                
+                                            </mat-grid-tile>
+    
+                                            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                                                <mat-form-field class = "form-group center" appearance="fill">
+                                                    <mat-label>New Last Name</mat-label>
+                                                    <input matInput [(ngModel)]="modifyUser.lastName" name="newLast" class="form-control" id="inputLastName">
+                                                </mat-form-field>                                                
+                                            </mat-grid-tile>
+                                        </mat-grid-list>
+                                    </div>
+
                                     <label class="modify-status"><i>{{ modifyStatus }}</i></label>
-                                    <br>
-                                    <br>
-                                    <button class="btn modify-btn" mat-raised-button (click)="modifyAccount()">Save Changes</button>
-                                </div>
+
+                                    <button class="btn modify-btn" mat-raised-button color="primary" (click)="modifyAccount()">Save Changes</button>
+
+                                </mat-card>
                             </td>
                             </tr>
                             </tbody>

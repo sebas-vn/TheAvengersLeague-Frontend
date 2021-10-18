@@ -7,4 +7,8 @@
 
 </div>
 
-<app-hero-card *ngIf="showC.show && showC.id == card.card.id" [hero]="card.card" [isHero]="((card.affilition | lowercase) == 'villain' ? false : true)" [parent]="null"></app-hero-card>
+<app-hero-card *ngIf="showC.show && showC.id == card.card.id" 
+    [hero]="card.card" 
+    [isHero]="((card.affilition | lowercase) == 'villain' ? false : true)" 
+    [parent]="null">
+</app-hero-card>
