@@ -8,6 +8,11 @@ div {
     cursor: pointer;
     color: azure;
     font-weight: 600;
+
+    max-width: 65px;
+    max-height: 65px;
+    border-style: solid;
+    border-width: 2px;
 }
 
 .only-item {

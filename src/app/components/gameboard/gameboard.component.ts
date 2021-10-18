@@ -21,7 +21,6 @@ export class GameboardComponent implements OnInit {
   oneSixtyNine: any[] = new Array(169).fill(0).map((_, i) => i);
   testObject = {};
   startingPosition;
-  
 
   constructor() { }
 
@@ -64,6 +63,10 @@ export class GameboardComponent implements OnInit {
       let pos = this.toCell(el.x, el.y)
       this.testObject[pos].push(el);
     });
+  }
+
+  dragStart(event) {
+    //start dragging
   }
 
   // Check the first three positions if they are empty to insert into hand

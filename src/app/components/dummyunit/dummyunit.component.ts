@@ -9,12 +9,10 @@ import { UserInventory } from 'src/app/models/user-inventory';
 })
 export class DummyunitComponent {
 
-  user: User = new User();
-  inventory: UserInventory;
-
   @Input('card') card;
   @Input('squareArray') squareArr;
   @Input() index;
+  @Input() shouldShowCard: boolean = true;
   imageUrl: string;
   showC = {show: false, id: null};
   
@@ -32,9 +30,13 @@ export class DummyunitComponent {
   showCard(event, bool) {
     this.showC.show = bool;
     this.showC.id = event.card.id;
-    console.log(event);
   }
 
-  
+  getBorderColor(): string {
+    if(this.card.affiliation == 'hero')
+      return '#FF0000';
+    else
+      return '#FF0000';
+  }
 
 }
