@@ -1,7 +1,7 @@
-.form-group {
-    padding: 1.5%
+.register {
+    margin-top: 1rem;
+    padding: 1rem;
 }
-
 .alert {
     margin-top: 3%;
 }
@@ -10,4 +10,12 @@
     margin: auto;
     padding: 10px;
     text-align: center
+}
+.width-full {
+    width: 100%;
+}
+
+.btn {
+    margin-top: 10px;
+    width: 100%;
 }

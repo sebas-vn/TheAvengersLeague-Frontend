@@ -1,19 +1,30 @@
-<h2 class = "center">Login</h2>
-<div class = "center">
-    <form>
-        <mat-form-field class = "form-group center">
-            <mat-label>Username</mat-label>
-            <input matInput [(ngModel)] = "login.username" type = "text" name = "username" class = "form-control">
-        </mat-form-field>
-        <br>
-        <mat-form-field class = "form-group center">
-            <mat-label>Password</mat-label>
-            <input matInput [(ngModel)] = "login.password" type = "password" name = "password" class = "form-control">
-        </mat-form-field>
-        <br>
-        <label class = "warn-label"><i>{{ status }}</i></label>
-        <br>
-        <br>
-        <button type="submit" class = "btn center" (click)=logIn()>Login</button>
-    </form>
+<div class="login">
+  <form>
+    <mat-form-field class="form-group full-width" appearance="fill">
+      <mat-label>Username</mat-label>
+      <input
+        matInput
+        [(ngModel)]="login.username"
+        type="text"
+        name="username"
+        class="form-control"
+      />
+    </mat-form-field>
+    <mat-form-field class="form-group full-width" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [(ngModel)]="login.password"
+        type="password"
+        name="password"
+        class="form-control"
+      />
+    </mat-form-field>
+
+    <div class="error-label">
+        <label class="warn-label"><i>{{ status }}</i></label>
+    </div>
+
+    <button mat-raised-button color="primary" class="btn" type="submit" (click)="logIn()">Login</button>
+  </form>
 </div>
