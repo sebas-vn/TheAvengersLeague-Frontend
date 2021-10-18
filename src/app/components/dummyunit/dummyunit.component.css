@@ -30,5 +30,6 @@ div {
 
 app-hero-card {
     position: absolute;
-    top: 30px;
+    top: 0px;
+    right: 0px;
 }

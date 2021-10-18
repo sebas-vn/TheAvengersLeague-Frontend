@@ -1,19 +1,18 @@
-<div cdkDropListGroup style="text-align: center;">
-    <label class="status-label"><i> {{status}} </i></label>
+<div cdkDropListGroup>
+
     <div class="board">
         <ng-container>
             <ng-container *ngFor="let i of oneSixtyNine">
                 <app-gameboard-square *ngIf="xy(i) as pos" [black]="isBlack(pos)" cdkDropList 
                 [cdkDropListData]="testObject[i]" 
                 (cdkDropListDropped)="drop($event)"
-               
                 [ngClass]="{'single-item-container': (testObject[i].length <= 1), 'double-item-container': (testObject[i].length > 1)}">
                     <!-- <app-dummyunit *ngIf="pos.x === dp.x && pos.y === dp.y" cdkDrag></app-dummyunit> -->
 
                     <ng-container *ngIf="testObject[i].length > 0">
                         <app-dummyunit *ngFor="let hero of testObject[i]; index as k"
                         [card]="hero" 
-                        [squareArray]="testObject[i]"  (cdkDragStarted)="dragStart($event)"
+                        [squareArray]="testObject[i]"
                         [index]="k" cdkDrag>
                         </app-dummyunit>  
                         
