@@ -60,6 +60,9 @@ export class GamePlayComponent implements OnInit, OnDestroy {
           this.gameBoard = data.body;
           this.response = new GameUpdate(this.gameBoard);
           this.inQueue = false;
+
+          this.gameBoardChild.gameBoard = data.body;
+          this.gameBoardChild.updateBoard();
         }
       },
       error => this.handleStatus(error)
@@ -69,7 +72,7 @@ export class GamePlayComponent implements OnInit, OnDestroy {
   submitTurn(): void {
     this.submittedTurn = true;
     this.gameService.updateGame(this.response).subscribe(
-      data => { 
+      data => {
         this.handleStatus(data.body);
         if('error' in data.body) 
           this.submittedTurn = false;  
@@ -110,6 +113,16 @@ export class GamePlayComponent implements OnInit, OnDestroy {
         }
       }
     }
+  }
+
+  moveCard(data: GameObjectMoves): void {
+    for(let i = 0; i < this.response.moves.length; i++) {
+      if(this.response.moves[i].uuid == data.uuid) {
+        this.response.moves[i].x = data.x;
+        this.response.moves[i].y = data.y;
+      }
+    }
+    this.response.moves.push(data);
   }
 
   leaveGame(): void {
