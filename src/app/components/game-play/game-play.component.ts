@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
 import { Coord } from '../coord';
+import { StaticSymbol } from '@angular/compiler';
 
 @Component({
   selector: 'app-game-play',
@@ -45,10 +46,13 @@ export class GamePlayComponent implements OnInit, OnDestroy {
 
   private update(): void {
     let response = null;
+    /*
     if(this.gameBoard == null)
       response = this.gameService.getGameForce();
     else
       response = this.gameService.getGame();
+      */
+    response = this.gameService.getGameForce();
 
     response.subscribe( data => {
         if(data.body.status)
@@ -56,13 +60,19 @@ export class GamePlayComponent implements OnInit, OnDestroy {
         else if(data.body.error)
             this.handleStatus(data.body.error);
 
-        if(data.body.gameBoard) {
+        if(data.body.gameBoard && (this.gameBoard == null || data.body.turn > this.gameBoard.turn) ) {
           this.gameBoard = data.body;
           this.response = new GameUpdate(this.gameBoard);
           this.inQueue = false;
+          this.submittedTurn = false;
 
           this.gameBoardChild.gameBoard = data.body;
           this.gameBoardChild.updateBoard();
+
+          if(data.body.state != 0) {
+            console.log("game over")
+            this.subscription.unsubscribe();
+          }
         }
       },
       error => this.handleStatus(error)
@@ -70,27 +80,23 @@ export class GamePlayComponent implements OnInit, OnDestroy {
   }
 
   submitTurn(): void {
-    this.submittedTurn = true;
     this.gameService.updateGame(this.response).subscribe(
       data => {
         console.log(data);
         this.handleStatus(data.body);
-        if('error' in data.body) 
-          this.submittedTurn = false;  
       },
       error => { 
         console.log(error);
         this.handleStatus(error); 
-        this.submittedTurn = false; 
       }
     );
   }
 
   getAffiliation(): boolean {
-    if(this.gameBoard == null && this.gameBoard.hand[0].affiliation.toLowerCase() == 'villain')
-      return false;
-    else
+    if(this.gameBoard.affiliation == 'hero')
       return true;
+    else
+      return false;
   }
 
   playCard(index: number): void {
@@ -99,7 +105,7 @@ export class GamePlayComponent implements OnInit, OnDestroy {
       if(coord != null) {
         this.response.hand[index] = 0;
         this.response.power -= this.gameBoard.hand[index].powerCost;
-        this.response.moves.push(new GameObjectMoves(null, this.gameBoard.hand[index].id, coord.x, coord.y) );
+        this.response.moves.push(new GameObjectMoves(null, this.gameBoard.hand[index].id, coord.x, coord.y-1) );
       }
     }
   }
@@ -110,7 +116,7 @@ export class GamePlayComponent implements OnInit, OnDestroy {
       this.response.hand[index] = this.gameBoard.hand[index].id;
       this.response.power += this.gameBoard.hand[index].powerCost;
       for(let i = 0; i < this.response.moves.length; i++) {
-        if(this.response.moves[i].x == coord.x && this.response.moves[i].y == coord.y) {
+        if(this.response.moves[i].x == coord.x && this.response.moves[i].y+1 == coord.y) {
           this.response.moves.splice(i,1);
         }
       }
@@ -118,10 +124,12 @@ export class GamePlayComponent implements OnInit, OnDestroy {
   }
 
   moveCard(data: GameObjectMoves): void {
+    data.y -= 1;
     for(let i = 0; i < this.response.moves.length; i++) {
       if(this.response.moves[i].uuid == data.uuid) {
         this.response.moves[i].x = data.x;
         this.response.moves[i].y = data.y;
+        return;
       }
     }
     this.response.moves.push(data);
@@ -143,10 +151,17 @@ export class GamePlayComponent implements OnInit, OnDestroy {
     if(message.error)
       status = message.error;
 
-    if(status.startsWith('in queue'))
-      this.inQueue = true;
-    else if(status.startsWith('not logged in'))
+    if(status.startsWith('in queue')) {
+      if(this.gameBoard == null)
+        this.inQueue = true;
+      else
+        this.subscription.unsubscribe();
+    } else if(status.startsWith('not logged in'))
       this.router.navigate(['/front-door']);
+    else if(status.startsWith('already confirmed the next turn'))
+      this.submittedTurn = true;
+    else if(status.startsWith('set users next move'))
+      this.submittedTurn = true;
   }
 
 }

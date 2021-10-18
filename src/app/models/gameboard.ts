@@ -6,15 +6,17 @@ export class GameBoard {
     state: number;
     power: number;
     status: string;
+    affiliation: string;
     events: string[];
     hand: Card[];
     gameObjects: GameObject[];
 
-    constructor(turn: number = -1, state: number = 0, power: number = 0, status: string = '', events: string[] = [], hand: Card[] = [], gameObjects: GameObject[] = []) {
+    constructor(turn: number = -1, state: number = 0, power: number = 0, status: string = '', affiliat:string = '', events: string[] = [], hand: Card[] = [], gameObjects: GameObject[] = []) {
         this.turn = turn;
         this.state = state;
         this.power = power;
         this.status = status;
+        this.affiliation = this.affiliation;
         this.events = events;
         this.hand = hand;
         this.gameObjects = gameObjects;
