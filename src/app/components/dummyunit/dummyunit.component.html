@@ -1,13 +1,14 @@
 <div (mouseover)="showCard(this, true)"
 (mouseout)="showCard(this, false)" 
 [ngStyle]="{'background-image': imageUrl}" 
-[ngClass]="{'first-item': (squareArr.length > 1 && index == 0), 'second-item': (squareArr.length > 1 && index == 1), 'only-item': (squareArr.length == 1)}">
+[ngClass]="{'first-item': (squareArr.length > 1 && index == 0), 'second-item': (squareArr.length > 1 && index == 1), 'only-item': (squareArr.length == 1)}"
+[style.border-color]="getBorderColor()">
 
     {{card.id}}
 
 </div>
 
-<app-hero-card *ngIf="showC.show && showC.id == card.card.id" 
+<app-hero-card *ngIf="shouldShowCard && showC.show && showC.id == card.card.id" 
     [hero]="card.card" 
     [isHero]="((card.affilition | lowercase) == 'villain' ? false : true)" 
     [parent]="null">

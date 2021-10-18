@@ -21,7 +21,6 @@ export class GameboardComponent implements OnInit {
   oneSixtyNine: any[] = new Array(169).fill(0).map((_, i) => i);
   testObject = {};
   startingPosition;
-  
 
   constructor() { }
 
@@ -64,6 +63,10 @@ export class GameboardComponent implements OnInit {
       let pos = this.toCell(el.x, el.y)
       this.testObject[pos].push(el);
     });
+  }
+
+  dragStart(event) {
+    //start dragging
   }
 
   // Check the first three positions if they are empty to insert into hand
@@ -110,7 +113,7 @@ export class GameboardComponent implements OnInit {
     let maxDistance = Math.floor(card.speed / 25) + 1; 
     let distance = Math.abs(oldCoords.x - newCoords.x) + Math.abs(oldCoords.y - newCoords.y);
 
-    if(distance < maxDistance) {
+    if(distance <= maxDistance) {
       return true;
     } else {
       return false;
@@ -127,6 +130,16 @@ export class GameboardComponent implements OnInit {
 
     if(this.isHero && event.previousContainer.data.length > 0) {
       if(event.previousContainer.data[0].affiliation == 'hero') {
+        object = event.previousContainer.data[0];
+        event.previousIndex = 0;
+      } else if(event.previousContainer.data.length > 1) {
+        object = event.previousContainer.data[1];
+        event.previousIndex = 1;
+      }
+    }
+
+    if(!this.isHero && event.previousContainer.data.length > 0) {
+      if(event.previousContainer.data[0].affiliation != 'hero') {
         object = event.previousContainer.data[0];
         event.previousIndex = 0;
       } else if(event.previousContainer.data.length > 1) {

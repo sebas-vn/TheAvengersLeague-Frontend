@@ -1,4 +1,5 @@
-<div cdkDropListGroup>
+<div cdkDropListGroup style="text-align: center;">
+    <label class="status-label"><i> {{status}} </i></label>
 
     <div class="board">
         <ng-container>
@@ -14,6 +15,12 @@
                         [card]="hero" 
                         [squareArray]="testObject[i]"
                         [index]="k" cdkDrag>
+                            <app-dummyunit *cdkDragPreview
+                            [card]="hero" 
+                            [squareArray]="testObject[i]"  (cdkDragStarted)="dragStart($event)"
+                            [index]="k" cdkDrag
+                            [shouldShowCard]=false>
+                            </app-dummyunit>
                         </app-dummyunit>  
                         
                     </ng-container>
