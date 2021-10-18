@@ -1,6 +1,6 @@
-import { TestgameService } from './../../services/testgame.service';
+import { DummyunitComponent } from './../dummyunit/dummyunit.component';
 import { Coord } from './../coord';
-import { ChangeDetectorRef, Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Gameboard } from 'src/app/interfaces/gameboard';
 import { Card } from 'src/app/models/user-inventory';
@@ -15,6 +15,7 @@ export class GameboardComponent implements OnInit {
   
   @Input() isHero: boolean;
   @Input() gameBoard: Gameboard;
+  @ViewChild('cardBoardUnit', {static: false}) cardBoardUnitChild:DummyunitComponent;
   @Output() moveObject = new EventEmitter<GameObjectMoves>();
 
   status: string = '';
@@ -23,7 +24,7 @@ export class GameboardComponent implements OnInit {
   startingPosition;
   
 
-  constructor(private tgameService: TestgameService, private cd: ChangeDetectorRef) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.updateBoard();
@@ -64,6 +65,10 @@ export class GameboardComponent implements OnInit {
       let pos = this.toCell(el.x, el.y)
       this.testObject[pos].push(el);
     });
+  }
+
+  dragStart(event) {
+    console.log(event);
   }
 
   // Check the first three positions if they are empty to insert into hand
