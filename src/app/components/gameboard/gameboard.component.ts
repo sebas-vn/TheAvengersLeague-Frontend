@@ -1,6 +1,6 @@
-import { TestgameService } from './../../services/testgame.service';
+import { DummyunitComponent } from './../dummyunit/dummyunit.component';
 import { Coord } from './../coord';
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Gameboard } from 'src/app/interfaces/gameboard';
 
@@ -13,12 +13,13 @@ export class GameboardComponent implements OnInit {
   
   @Input() isHero: boolean;
   @Input() gameBoard: Gameboard;
+  @ViewChild('cardBoardUnit', {static: false}) cardBoardUnitChild:DummyunitComponent;
   oneSixtyNine: any[] = new Array(169).fill(0).map((_, i) => i);
   testObject = {};
   startingPosition;
   
 
-  constructor(private tgameService: TestgameService, private cd: ChangeDetectorRef) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.oneSixtyNine.forEach((e) => {
@@ -59,6 +60,10 @@ export class GameboardComponent implements OnInit {
       });
     })
 
+  }
+
+  dragStart(event) {
+    console.log(event);
   }
 
   // Check the first three positions if they are empty to insert into hand

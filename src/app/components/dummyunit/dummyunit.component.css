@@ -13,20 +13,22 @@ div {
 .only-item {
     width: 70%;
     height: 70%;
-    background: url('../../../assets/generic-hero.jpg');
     background-size: cover;
 }
 
 .first-item {
-    background: url('../../../assets/generic-hero.jpg');
     width: 100%;
     height: 100%;
     background-size: cover;
 }
 
 .second-item {
-    background: url('../../../assets/superman.jpg');
     width: 100%;
     height: 100%;
     background-size: cover;
+}
+
+app-hero-card {
+    position: absolute;
+    top: 30px;
 }

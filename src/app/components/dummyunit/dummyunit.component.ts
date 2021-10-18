@@ -1,5 +1,3 @@
-import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { UserInventory } from 'src/app/models/user-inventory';
@@ -17,13 +15,23 @@ export class DummyunitComponent {
   @Input('card') card;
   @Input('squareArray') squareArr;
   @Input() index;
+  imageUrl: string;
+  showC = {show: false, id: null};
   
   constructor() { }
 
 
   ngOnInit(): void {
 
+    this.imageUrl = `url(${this.card.image})`;
+
     console.log(this.card, this.squareArr, this.index);
+  }
+
+  showCard(event, bool) {
+    this.showC.show = bool;
+    this.showC.id = event.card.id;
+    console.log(event);
   }
 
   
