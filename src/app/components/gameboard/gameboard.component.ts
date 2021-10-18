@@ -1,10 +1,10 @@
 import { TestgameService } from './../../services/testgame.service';
 import { Coord } from './../coord';
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Gameboard } from 'src/app/interfaces/gameboard';
 import { Card } from 'src/app/models/user-inventory';
-import { GameObject } from 'src/app/models/gameboard';
+import { GameObject, GameObjectMoves } from 'src/app/models/gameboard';
 
 @Component({
   selector: 'app-game',
@@ -15,6 +15,8 @@ export class GameboardComponent implements OnInit {
   
   @Input() isHero: boolean;
   @Input() gameBoard: Gameboard;
+  @Output() moveObject = new EventEmitter<GameObjectMoves>();
+
   status: string = '';
   oneSixtyNine: any[] = new Array(169).fill(0).map((_, i) => i);
   testObject = {};
@@ -105,9 +107,6 @@ export class GameboardComponent implements OnInit {
   }
 
   checkMovementDistance(oldCoords: Coord, newCoords: Coord, card: Card): boolean {
-    console.log(oldCoords)
-    console.log(newCoords)
-
     let maxDistance = Math.floor(card.speed / 25) + 1; 
     let distance = Math.abs(oldCoords.x - newCoords.x) + Math.abs(oldCoords.y - newCoords.y);
 
@@ -180,6 +179,7 @@ export class GameboardComponent implements OnInit {
               event.previousIndex,
               event.currentIndex
             );
+            this.moveObject.emit( new GameObjectMoves(object.uuid, 0, newCoord.x, newCoord.y));
           } catch (error) {
             console.error(error);
           }

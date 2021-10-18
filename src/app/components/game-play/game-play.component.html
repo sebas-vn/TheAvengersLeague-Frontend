@@ -44,6 +44,6 @@
     </div>
         
     <div>
-        <app-game #gameboard [gameBoard]="gameBoard" [isHero]="getAffiliation()"></app-game>
+        <app-game #gameboard [gameBoard]="gameBoard" [isHero]="getAffiliation()" (moveObject)="moveCard($event)"></app-game>
     </div>
 </div>
