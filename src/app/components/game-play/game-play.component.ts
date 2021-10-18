@@ -1,11 +1,12 @@
 import { GameboardComponent } from './../gameboard/gameboard.component';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { GameBoard, GameUpdate } from 'src/app/models/gameboard';
+import { GameBoard, GameObjectMoves, GameUpdate } from 'src/app/models/gameboard';
 import { GameService } from 'src/app/services/game.service';
 import { interval, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
+import { Coord } from '../coord';
 
 @Component({
   selector: 'app-game-play',
@@ -13,8 +14,6 @@ import { User } from 'src/app/models/user';
   styleUrls: ['./game-play.component.css']
 })
 export class GamePlayComponent implements OnInit, OnDestroy {
-
-  //test
 
   inQueue: boolean;
   submittedTurn: boolean;
@@ -61,9 +60,27 @@ export class GamePlayComponent implements OnInit, OnDestroy {
           this.gameBoard = data.body;
           this.response = new GameUpdate(this.gameBoard);
           this.inQueue = false;
+
+          this.gameBoardChild.gameBoard = data.body;
+          this.gameBoardChild.updateBoard();
         }
       },
       error => this.handleStatus(error)
+    );
+  }
+
+  submitTurn(): void {
+    this.submittedTurn = true;
+    this.gameService.updateGame(this.response).subscribe(
+      data => {
+        this.handleStatus(data.body);
+        if('error' in data.body) 
+          this.submittedTurn = false;  
+      },
+      error => { 
+        this.handleStatus(error); 
+        this.submittedTurn = false; 
+      }
     );
   }
 
@@ -75,29 +92,37 @@ export class GamePlayComponent implements OnInit, OnDestroy {
   }
 
   playCard(index: number): void {
-    
-    if(this.gameBoard.hand[index].powerCost <= this.gameBoard.power) {
-      this.response.hand[index] = 0;
-      this.response.power -= this.gameBoard.hand[index].powerCost;
-
-      let insert = this.gameBoardChild.insertItemFromHand(this.gameBoard.hand[index]);
+    if(this.gameBoard.hand[index].powerCost <= this.gameBoard.power + 100) {
+      const coord: Coord = this.gameBoardChild.insertItemFromHand(this.gameBoard.hand[index]);
+      if(coord != null) {
+        this.response.hand[index] = 0;
+        this.response.power -= this.gameBoard.hand[index].powerCost;
+        this.response.moves.push(new GameObjectMoves(null, this.gameBoard.hand[index].id, coord.x, coord.y) );
+      }
     }
-    
   }
 
   unplayCard(index: number): void {
-    this.response.hand[index] = this.gameBoard.hand[index].id;
-    this.response.power += this.gameBoard.hand[index].powerCost;
-    
-    let remove = this.gameBoardChild.returnItemToHand(this.gameBoard.hand[index]);
+    const coord: Coord = this.gameBoardChild.returnItemToHand(this.gameBoard.hand[index]);
+    if(coord != null) {
+      this.response.hand[index] = this.gameBoard.hand[index].id;
+      this.response.power += this.gameBoard.hand[index].powerCost;
+      for(let i = 0; i < this.response.moves.length; i++) {
+        if(this.response.moves[i].x == coord.x && this.response.moves[i].y == coord.y) {
+          this.response.moves.splice(i,1);
+        }
+      }
+    }
   }
 
-  submitTurn(): void {
-    this.submittedTurn = true;
-    this.gameService.updateGame(this.response).subscribe(
-      data => this.handleStatus(data.body),
-      error => { this.handleStatus(error); this.submittedTurn = false; }
-    );
+  moveCard(data: GameObjectMoves): void {
+    for(let i = 0; i < this.response.moves.length; i++) {
+      if(this.response.moves[i].uuid == data.uuid) {
+        this.response.moves[i].x = data.x;
+        this.response.moves[i].y = data.y;
+      }
+    }
+    this.response.moves.push(data);
   }
 
   leaveGame(): void {
