@@ -8,7 +8,7 @@
         <button class="btn leave-btn" mat-raised-button (click)="leaveGame()">Leave Queue</button>
     </div>
 </div>
-<div class="gameboard" *ngIf="!inQueue && gameBoard != null && gameBoard.state == 0">
+<div class="gameboard" *ngIf="!inQueue && gameBoard != null">
     <div class = "sideboard">
         <div class="text-div">
             <h1>Current Turn: {{ gameBoard.turn }}</h1>
