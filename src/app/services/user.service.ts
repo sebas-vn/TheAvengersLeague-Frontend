@@ -14,6 +14,7 @@ import { LoginMessage } from '../models/login-message';
 export class UserService {
 
   private static token: string = '';
+  private test: number = 0;
 
   constructor(private http: HttpClient) { }
 
